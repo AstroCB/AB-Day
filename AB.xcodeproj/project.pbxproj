@@ -12,7 +12,7 @@
 		9D01981A19C5FB5500D7543D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D01981819C5FB5500D7543D /* Main.storyboard */; };
 		9D01981F19C5FB5500D7543D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D01981D19C5FB5500D7543D /* LaunchScreen.xib */; };
 		9D01982B19C5FB5600D7543D /* ABTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D01982A19C5FB5600D7543D /* ABTests.swift */; };
-		9D2E4F0619DC873D00D3C3DD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D2E4F0519DC873D00D3C3DD /* Images.xcassets */; };
+		9DA3318F19E897FE007C9EBF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DA3318E19E897FE007C9EBF /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,7 +35,7 @@
 		9D01982419C5FB5600D7543D /* ABTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ABTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D01982919C5FB5600D7543D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9D01982A19C5FB5600D7543D /* ABTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABTests.swift; sourceTree = "<group>"; };
-		9D2E4F0519DC873D00D3C3DD /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		9DA3318E19E897FE007C9EBF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,7 +89,7 @@
 		9D01981219C5FB5500D7543D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				9D2E4F0519DC873D00D3C3DD /* Images.xcassets */,
+				9DA3318E19E897FE007C9EBF /* Images.xcassets */,
 				9D01981319C5FB5500D7543D /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -192,7 +192,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9D2E4F0619DC873D00D3C3DD /* Images.xcassets in Resources */,
+				9DA3318F19E897FE007C9EBF /* Images.xcassets in Resources */,
 				9D01981A19C5FB5500D7543D /* Main.storyboard in Resources */,
 				9D01981F19C5FB5500D7543D /* LaunchScreen.xib in Resources */,
 			);
@@ -336,6 +336,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = AB/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -348,6 +349,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = AB/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
