@@ -16,6 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        if(UIScreen.mainScreen().bounds.height == 480.0) { // Don't show status bar on 4s (not enough room)
+            application.statusBarHidden = true
+        }
         return true
     }
 

@@ -59,7 +59,6 @@ class ViewController: UIViewController {
     @IBAction func getDate() {
         if(today) { //toggle button function between one that loads today and one that opens the datepicker (messy to avoid adding another button)
             calendar.setDate(NSDate(), animated: true)
-            
             today = false
         } else {
             calendar.hidden = false

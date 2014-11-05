@@ -10,7 +10,6 @@
 		9D01981519C5FB5500D7543D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D01981419C5FB5500D7543D /* AppDelegate.swift */; };
 		9D01981719C5FB5500D7543D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D01981619C5FB5500D7543D /* ViewController.swift */; };
 		9D01981A19C5FB5500D7543D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D01981819C5FB5500D7543D /* Main.storyboard */; };
-		9D01981F19C5FB5500D7543D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D01981D19C5FB5500D7543D /* LaunchScreen.xib */; };
 		9D01982B19C5FB5600D7543D /* ABTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D01982A19C5FB5600D7543D /* ABTests.swift */; };
 		9DA3318F19E897FE007C9EBF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DA3318E19E897FE007C9EBF /* Images.xcassets */; };
 /* End PBXBuildFile section */
@@ -25,16 +24,29 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		9D57C5151A09ADD4005609F9 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		9D01980F19C5FB5500D7543D /* AB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AB.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D01981319C5FB5500D7543D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9D01981419C5FB5500D7543D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9D01981619C5FB5500D7543D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		9D01981919C5FB5500D7543D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		9D01981E19C5FB5500D7543D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		9D01982419C5FB5600D7543D /* ABTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ABTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D01982919C5FB5600D7543D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9D01982A19C5FB5600D7543D /* ABTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABTests.swift; sourceTree = "<group>"; };
+		9D57C5061A09ADD4005609F9 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		9DA3318E19E897FE007C9EBF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -61,6 +73,7 @@
 			children = (
 				9D01981119C5FB5500D7543D /* AB */,
 				9D01982719C5FB5600D7543D /* ABTests */,
+				9D57C5051A09ADD4005609F9 /* Frameworks */,
 				9D01981019C5FB5500D7543D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -80,7 +93,6 @@
 				9D01981419C5FB5500D7543D /* AppDelegate.swift */,
 				9D01981619C5FB5500D7543D /* ViewController.swift */,
 				9D01981819C5FB5500D7543D /* Main.storyboard */,
-				9D01981D19C5FB5500D7543D /* LaunchScreen.xib */,
 				9D01981219C5FB5500D7543D /* Supporting Files */,
 			);
 			path = AB;
@@ -112,6 +124,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		9D57C5051A09ADD4005609F9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9D57C5061A09ADD4005609F9 /* NotificationCenter.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -122,6 +142,7 @@
 				9D01980B19C5FB5500D7543D /* Sources */,
 				9D01980C19C5FB5500D7543D /* Frameworks */,
 				9D01980D19C5FB5500D7543D /* Resources */,
+				9D57C5151A09ADD4005609F9 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
@@ -161,6 +182,7 @@
 				TargetAttributes = {
 					9D01980E19C5FB5500D7543D = {
 						CreatedOnToolsVersion = 6.0;
+						DevelopmentTeam = VFK9RBFX9F;
 					};
 					9D01982319C5FB5600D7543D = {
 						CreatedOnToolsVersion = 6.0;
@@ -194,7 +216,6 @@
 			files = (
 				9DA3318F19E897FE007C9EBF /* Images.xcassets in Resources */,
 				9D01981A19C5FB5500D7543D /* Main.storyboard in Resources */,
-				9D01981F19C5FB5500D7543D /* LaunchScreen.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,14 +263,6 @@
 				9D01981919C5FB5500D7543D /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		9D01981D19C5FB5500D7543D /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9D01981E19C5FB5500D7543D /* Base */,
-			);
-			name = LaunchScreen.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -337,8 +350,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = AB/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -350,8 +365,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = AB/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
