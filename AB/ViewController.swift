@@ -19,7 +19,6 @@ class ViewController: UIViewController {
         calendar.backgroundColor = UIColor(white: 1, alpha: 0.5)
         
         load(NSDate(), shouldUpdate: true)
-        updateToday()
         
         calendar.hidden = true
         ab.hidden = false
@@ -54,21 +53,6 @@ class ViewController: UIViewController {
         }
         
         return nil
-    }
-    
-    func updateToday() {
-        let day = load(NSDate(), shouldUpdate: false)
-        
-        let defaults = NSUserDefaults(suiteName: "group.AB")
-        
-        if let dayString = day {
-            defaults?.setObject(dayString, forKey: "dayString")
-            println(defaults?.valueForKey("dayString")!)
-        } else {
-            defaults?.setObject(nil, forKey: "dayString")
-        }
-        
-        defaults?.synchronize()
     }
     
     @IBAction func getDate() {
