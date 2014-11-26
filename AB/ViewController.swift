@@ -17,8 +17,9 @@ class ViewController: UIViewController {
         connected = true
         
         calendar.backgroundColor = UIColor(white: 1, alpha: 0.5)
+        calendar.timeZone = NSTimeZone(abbreviation: "EDT")
         
-        load(NSDate(), shouldUpdate: true)
+        load(NSDate(), isToday: false)
         
         calendar.hidden = true
         ab.hidden = false
@@ -75,7 +76,7 @@ class ViewController: UIViewController {
         another.setTitle("Another Date?", forState: UIControlState.Normal)
         
         if(connected) {
-            load(calendar.date, shouldUpdate: true)
+            load(calendar.date, isToday: false)
             today = false
         } else {
             request = getData()
@@ -87,7 +88,7 @@ class ViewController: UIViewController {
         return getJSON("https://dl.dropboxusercontent.com/u/56017856/dates.json")
     }
     
-    func load(date: NSDate, shouldUpdate: Bool) -> String? {
+    func load(date: NSDate, isToday: Bool) {
         calendar.hidden = true
         ab.hidden = false
         another.hidden = false
@@ -98,14 +99,19 @@ class ViewController: UIViewController {
         
         let strDate = dateFormatter.stringFromDate(date)
         dateString.text = strDate
+        var newDate: NSDate
         
         if let req = request {
             var data = parseJSON(req)!
             
-            // Create a new NSDate object starting at midnight on the specified day by using NSCalendar and pulling in date's components
-            let cal: NSCalendar = NSCalendar(calendarIdentifier: NSGregorianCalendar)!
-            let components = cal.components(.CalendarUnitDay | .CalendarUnitMonth | .CalendarUnitYear, fromDate: date)
-            let newDate: NSDate = cal.dateFromComponents(components)!
+            if !isToday {
+                // Create a new NSDate object starting at midnight on the specified day by using NSCalendar and pulling in date's components
+                let cal: NSCalendar = NSCalendar(calendarIdentifier: NSGregorianCalendar)!
+                let components = cal.components(.CalendarUnitDay | .CalendarUnitMonth | .CalendarUnitYear, fromDate: date)
+                newDate = cal.dateFromComponents(components)!
+            } else {
+                newDate = date
+            }
             
             // Because the values stored are larger than the Integer data type can hold, you must calculate the time since epoch as a Double type, interpolate it in a String, and shave off the last two characters (.0) to get it into a String form (quite messy - if you're reading this ten years later and you know how to fix this, please do so)
             var timeSince1970: String = "\(newDate.timeIntervalSince1970 * 1000)" // Collect time in seconds since 1970 and convert to milliseconds to access day key in data Dictionary
@@ -113,28 +119,24 @@ class ViewController: UIViewController {
             let range: Range<String.Index> = Range<String.Index>(start: timeSince1970.startIndex, end: end)
             timeSince1970 = timeSince1970.substringWithRange(range)
             
-            if shouldUpdate { // Decides whether to update what's onscreen or just return the calculated date
-                if let abDay: String = data.valueForKey(timeSince1970) as? String {
-                    if abDay == "PD" {
-                        ab.font = UIFont.systemFontOfSize(20)
-                        ab.numberOfLines = 2 // Add a line to fit the following
-                        ab.text = "Professional Development Day\n(No School)"
-                    } else {
-                        ab.font = UIFont.systemFontOfSize(100)
-                        ab.numberOfLines = 1
-                        ab.text = abDay
-                    }
-                } else {
+            println(newDate)
+            
+            if let abDay: String = data.valueForKey(timeSince1970) as? String {
+                if abDay == "PD" {
                     ab.font = UIFont.systemFontOfSize(20)
-                    ab.text = "No School"
+                    ab.numberOfLines = 2 // Add a line to fit the following
+                    ab.text = "Professional Development Day\n(No School)"
+                } else {
+                    ab.font = UIFont.systemFontOfSize(100)
+                    ab.numberOfLines = 1
+                    ab.text = abDay
                 }
             } else {
-                return data.valueForKey(timeSince1970) as? String
+                ab.font = UIFont.systemFontOfSize(20)
+                ab.text = "No School"
             }
         } else {
             connected = false
         }
-        
-        return nil
     }
 }
