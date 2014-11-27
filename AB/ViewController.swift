@@ -113,8 +113,17 @@ class ViewController: UIViewController {
         another.hidden = false
         
         // Make date readable; display it
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter: NSDateFormatter = NSDateFormatter()
         dateFormatter.dateStyle = .FullStyle
+        
+        // Set font sizes to fit screens properly
+        if UIScreen.mainScreen().bounds.width < 375 {
+            dateString.font = UIFont.systemFontOfSize(20.00)
+        } else if UIScreen.mainScreen().bounds.width == 375{
+            dateString.font = UIFont.systemFontOfSize(25.00)
+        } else {
+            dateString.font = UIFont.systemFontOfSize(30.00)
+        }
         
         let strDate = dateFormatter.stringFromDate(date)
         dateString.text = strDate
@@ -124,9 +133,9 @@ class ViewController: UIViewController {
             
             dateFormatter.dateStyle = .ShortStyle
             let keyArr: [String] = dateFormatter.stringFromDate(date).split("/")
-
+            
             let keyStr = "\(keyArr[0] + keyArr[1])20\(keyArr[2])"
-
+            
             if let abDay: String = data.valueForKey(keyStr) as? String {
                 if abDay == "PD" {
                     ab.font = UIFont.systemFontOfSize(20)
