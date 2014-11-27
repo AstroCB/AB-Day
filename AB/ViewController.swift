@@ -8,6 +8,25 @@
 
 import UIKit
 
+extension String {
+    public func split(separator: String) -> [String] {
+        if separator.isEmpty {
+            return map(self) { String($0) }
+        }
+        if var pre = self.rangeOfString(separator) {
+            var parts = [self.substringToIndex(pre.startIndex)]
+            while let rng = self.rangeOfString(separator, range: pre.endIndex..<endIndex) {
+                parts.append(self.substringWithRange(pre.endIndex..<rng.startIndex))
+                pre = rng
+            }
+            parts.append(self.substringWithRange(pre.endIndex..<endIndex))
+            return parts
+        } else {
+            return [self]
+        }
+    }
+}
+
 class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,7 +38,7 @@ class ViewController: UIViewController {
         calendar.backgroundColor = UIColor(white: 1, alpha: 0.5)
         calendar.timeZone = NSTimeZone(abbreviation: "EDT")
         
-        load(NSDate(), isToday: false)
+        load(NSDate())
         
         calendar.hidden = true
         ab.hidden = false
@@ -76,7 +95,7 @@ class ViewController: UIViewController {
         another.setTitle("Another Date?", forState: UIControlState.Normal)
         
         if(connected) {
-            load(calendar.date, isToday: false)
+            load(calendar.date)
             today = false
         } else {
             request = getData()
@@ -88,48 +107,27 @@ class ViewController: UIViewController {
         return getJSON("https://dl.dropboxusercontent.com/u/56017856/dates.json")
     }
     
-    func load(date: NSDate, isToday: Bool) {
+    func load(date: NSDate) {
         calendar.hidden = true
         ab.hidden = false
         another.hidden = false
         
-        // Make date readable, display it
-        var dateFormatter = NSDateFormatter()
-        dateFormatter.dateStyle = NSDateFormatterStyle.FullStyle
+        // Make date readable; display it
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateStyle = .FullStyle
         
         let strDate = dateFormatter.stringFromDate(date)
         dateString.text = strDate
-        let cal: NSCalendar = NSCalendar(calendarIdentifier: NSGregorianCalendar)!
-        var newDate: NSDate = cal.startOfDayForDate(date)
         
         if let req = request {
             var data = parseJSON(req)!
             
-            if !isToday {
-                // Create a new NSDate object starting at midnight on the specified day by using NSCalendar and pulling in date's components
-                //                let cal: NSCalendar = NSCalendar(calendarIdentifier: NSGregorianCalendar)!
-                //                let components = cal.components(.CalendarUnitDay | .CalendarUnitMonth | .CalendarUnitYear, fromDate: date)
-                //                newDate = cal.dateFromComponents(components)!
-                if let date: NSData = getJSON("http://date.jsontest.com") {
-                    if let dateData: NSDictionary = parseJSON(date) {
-                        let key: Int = dateData.valueForKey("milliseconds_since_epoch") as Int
-                        let keyStr: String = "\(key)"
-                        println(data.valueForKey(keyStr))
-                    }
-                } else {
-                    newDate = date
-                }
-            }
-            
-            // Because the values stored are larger than the Integer data type can hold, you must calculate the time since epoch as a Double type, interpolate it in a String, and shave off the last two characters (.0) to get it into a String form (quite messy - if you're reading this ten years later and you know how to fix this, please do so)
-            var timeSince1970: String = "\(newDate.timeIntervalSince1970 * 1000)" // Collect time in seconds since 1970 and convert to milliseconds to access day key in data Dictionary
-            let end = advance(timeSince1970.endIndex, -2)
-            let range: Range<String.Index> = Range<String.Index>(start: timeSince1970.startIndex, end: end)
-            timeSince1970 = timeSince1970.substringWithRange(range)
-            
-            println(newDate)
-            
-            if let abDay: String = data.valueForKey(timeSince1970) as? String {
+            dateFormatter.dateStyle = .ShortStyle
+            let keyArr: [String] = dateFormatter.stringFromDate(date).split("/")
+
+            let keyStr = "\(keyArr[0] + keyArr[1])20\(keyArr[2])"
+
+            if let abDay: String = data.valueForKey(keyStr) as? String {
                 if abDay == "PD" {
                     ab.font = UIFont.systemFontOfSize(20)
                     ab.numberOfLines = 2 // Add a line to fit the following

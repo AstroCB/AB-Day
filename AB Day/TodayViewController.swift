@@ -9,6 +9,25 @@
 import UIKit
 import NotificationCenter
 
+extension String {
+    public func split(separator: String) -> [String] {
+        if separator.isEmpty {
+            return map(self) { String($0) }
+        }
+        if var pre = self.rangeOfString(separator) {
+            var parts = [self.substringToIndex(pre.startIndex)]
+            while let rng = self.rangeOfString(separator, range: pre.endIndex..<endIndex) {
+                parts.append(self.substringWithRange(pre.endIndex..<rng.startIndex))
+                pre = rng
+            }
+            parts.append(self.substringWithRange(pre.endIndex..<endIndex))
+            return parts
+        } else {
+            return [self]
+        }
+    }
+}
+
 class TodayViewController: UIViewController, NCWidgetProviding {
     
     @IBOutlet weak var abField: UILabel!
@@ -39,17 +58,14 @@ class TodayViewController: UIViewController, NCWidgetProviding {
             }
 
             if let newData = parsedData {
-                // See ViewController.swift for explanation
-                let cal: NSCalendar = NSCalendar(calendarIdentifier: NSGregorianCalendar)!
-                let components = cal.components(.CalendarUnitDay | .CalendarUnitMonth | .CalendarUnitYear, fromDate: NSDate())
-                let newDate: NSDate = cal.dateFromComponents(components)!
+                let date: NSDate = NSDate()
+                let dateFormatter = NSDateFormatter()
+                dateFormatter.dateStyle = .ShortStyle
+                let keyArr: [String] = dateFormatter.stringFromDate(date).split("/")
                 
-                var timeSince1970: String = "\(newDate.timeIntervalSince1970 * 1000)"
-                let end = advance(timeSince1970.endIndex, -2)
-                let range: Range<String.Index> = Range<String.Index>(start: timeSince1970.startIndex, end: end)
-                timeSince1970 = timeSince1970.substringWithRange(range)
+                let keyStr: String = "\(keyArr[0] + keyArr[1])20\(keyArr[2])"
                 
-                return parsedData!.valueForKey(timeSince1970) as? String
+                return newData.valueForKey(keyStr) as? String
             }
         }
         return nil
