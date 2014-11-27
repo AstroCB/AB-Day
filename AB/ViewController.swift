@@ -99,18 +99,26 @@ class ViewController: UIViewController {
         
         let strDate = dateFormatter.stringFromDate(date)
         dateString.text = strDate
-        var newDate: NSDate
+        let cal: NSCalendar = NSCalendar(calendarIdentifier: NSGregorianCalendar)!
+        var newDate: NSDate = cal.startOfDayForDate(date)
         
         if let req = request {
             var data = parseJSON(req)!
             
             if !isToday {
                 // Create a new NSDate object starting at midnight on the specified day by using NSCalendar and pulling in date's components
-                let cal: NSCalendar = NSCalendar(calendarIdentifier: NSGregorianCalendar)!
-                let components = cal.components(.CalendarUnitDay | .CalendarUnitMonth | .CalendarUnitYear, fromDate: date)
-                newDate = cal.dateFromComponents(components)!
-            } else {
-                newDate = date
+                //                let cal: NSCalendar = NSCalendar(calendarIdentifier: NSGregorianCalendar)!
+                //                let components = cal.components(.CalendarUnitDay | .CalendarUnitMonth | .CalendarUnitYear, fromDate: date)
+                //                newDate = cal.dateFromComponents(components)!
+                if let date: NSData = getJSON("http://date.jsontest.com") {
+                    if let dateData: NSDictionary = parseJSON(date) {
+                        let key: Int = dateData.valueForKey("milliseconds_since_epoch") as Int
+                        let keyStr: String = "\(key)"
+                        println(data.valueForKey(keyStr))
+                    }
+                } else {
+                    newDate = date
+                }
             }
             
             // Because the values stored are larger than the Integer data type can hold, you must calculate the time since epoch as a Double type, interpolate it in a String, and shave off the last two characters (.0) to get it into a String form (quite messy - if you're reading this ten years later and you know how to fix this, please do so)
