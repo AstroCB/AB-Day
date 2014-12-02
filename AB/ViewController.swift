@@ -44,6 +44,15 @@ class ViewController: UIViewController {
         ab.hidden = false
         another.hidden = false
         reload.setTitle("Reload", forState: UIControlState.Normal)
+        
+        // Set font sizes to fit screens properly
+        if UIScreen.mainScreen().bounds.width < 375 {
+            dateString.font = UIFont.systemFontOfSize(20.00)
+        } else if UIScreen.mainScreen().bounds.width == 375{
+            dateString.font = UIFont.systemFontOfSize(25.00)
+        } else {
+            dateString.font = UIFont.systemFontOfSize(30.00)
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -115,15 +124,6 @@ class ViewController: UIViewController {
         // Make date readable; display it
         let dateFormatter: NSDateFormatter = NSDateFormatter()
         dateFormatter.dateStyle = .FullStyle
-        
-        // Set font sizes to fit screens properly
-        if UIScreen.mainScreen().bounds.width < 375 {
-            dateString.font = UIFont.systemFontOfSize(20.00)
-        } else if UIScreen.mainScreen().bounds.width == 375{
-            dateString.font = UIFont.systemFontOfSize(25.00)
-        } else {
-            dateString.font = UIFont.systemFontOfSize(30.00)
-        }
         
         let strDate = dateFormatter.stringFromDate(date)
         dateString.text = strDate

@@ -64,7 +64,6 @@ class TodayViewController: UIViewController, NCWidgetProviding {
                 let keyArr: [String] = dateFormatter.stringFromDate(date).split("/")
                 
                 let keyStr: String = "\(keyArr[0] + keyArr[1])20\(keyArr[2])"
-                
                 return newData.valueForKey(keyStr) as? String
             }
         }
