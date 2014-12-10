@@ -56,7 +56,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
             if let JSON: NSDictionary = NSJSONSerialization.JSONObjectWithData(req, options: NSJSONReadingOptions.MutableContainers, error: &error) as? NSDictionary {
                 parsedData = JSON
             }
-
+            
             if let newData = parsedData {
                 let date: NSDate = NSDate()
                 let dateFormatter = NSDateFormatter()
@@ -67,7 +67,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
                 return newData.valueForKey(keyStr) as? String
             }
         }
-        return nil
+        return "no_connection"
     }
     
     func widgetPerformUpdateWithCompletionHandler(completionHandler: ((NCUpdateResult) -> Void)!) {
@@ -78,7 +78,12 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         // If there's an update, use NCUpdateResult.NewData
         
         if let abDay: String = getData() {
-            abField.text = abDay + " Day"
+            if abDay == "no_connection" {
+                abField.text = "-"
+                completionHandler(NCUpdateResult.Failed)
+            } else {
+                abField.text = abDay + " Day"
+            }
         } else {
             abField.text = "No School"
         }

@@ -133,8 +133,64 @@ class ViewController: UIViewController {
             
             dateFormatter.dateStyle = .ShortStyle
             let keyArr: [String] = dateFormatter.stringFromDate(date).split("/")
-            
             let keyStr = "\(keyArr[0] + keyArr[1])20\(keyArr[2])"
+            
+            //calendar.maximumDate =
+            
+            let datesArr: NSArray = data.allKeys
+            var newDates: [NSDate] = [NSDate]()
+            
+            for i in datesArr {
+                if let myDate: String = i as? String {
+                    let year: String = myDate.substringFromIndex(advance(myDate.endIndex, -4))
+                    let dayMonth: String = myDate.substringToIndex(advance(myDate.endIndex, -4))
+                    
+                    // This is where it gets tricky; so the dates are received in the format M(M)D(D)YYYY, so I don't know whether the date and/or the month is/are one/two digits
+                    
+                    var month: String = ""
+                    var day: String = ""
+                    
+                    if countElements(dayMonth) == 2 { // MD
+                        day = dayMonth.substringFromIndex(advance(dayMonth.endIndex, -1))
+                        month = dayMonth.substringToIndex(advance(dayMonth.endIndex, -1))
+                    } else if countElements(dayMonth) == 3 { // MMD || MDD
+                        var preMonth: String = ""
+                        var preDay: String = ""
+                        
+                        if year == "2014" {
+                            preMonth = dayMonth.substringToIndex(advance(dayMonth.endIndex, -1))
+                            preDay = dayMonth.substringFromIndex(advance(dayMonth.endIndex, -1))
+                        } else if year == "2015" {
+                            preMonth = dayMonth.substringToIndex(advance(dayMonth.endIndex, -2))
+                            preDay = dayMonth.substringFromIndex(advance(dayMonth.endIndex, -2))
+                        } else {
+                            // Expand later
+                        }
+                        if preDay.toInt() >= 1 && preMonth.toInt() <= 12 {
+                            day = preDay
+                            month = preMonth
+                        } else {
+                            day = dayMonth.substringFromIndex(advance(dayMonth.endIndex, -2))
+                            month = dayMonth.substringToIndex(advance(dayMonth.endIndex, -2))
+                        }
+                        
+                    } else { // MMDD
+                        day = dayMonth.substringFromIndex(advance(dayMonth.endIndex, -2))
+                        month = dayMonth.substringToIndex(advance(dayMonth.endIndex, -2))
+                    }
+                    let dateString: String = "\(month)/\(day)/\(year)"
+                    // I can't believe that that actually just worked
+                    
+                    if let dateToAppend: NSDate = dateFormatter.dateFromString(dateString) {
+                        newDates.append(dateToAppend)
+                    }
+                }
+            }
+            
+            var descriptor: NSSortDescriptor = NSSortDescriptor(key: "", ascending: true)
+            var sortedResults: NSArray = datesArr.sortedArrayUsingDescriptors([descriptor])
+            
+            //            println(sortedResults)
             
             if let abDay: String = data.valueForKey(keyStr) as? String {
                 if abDay == "PD" {
