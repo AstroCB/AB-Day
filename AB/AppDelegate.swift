@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,10 +17,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        if(UIScreen.mainScreen().bounds.height == 480.0) { // Don't show status bar on 4s (not enough room)
+        if(UIScreen.mainScreen().bounds.height <= 480.0) { // Don't show status bar on 4s (not enough room)
             application.statusBarHidden = true
         }
+        
+        Parse.setApplicationId("WGmtjlRAoyLDAnsFkyAhM5YvuCA2cqeklcyBtwcz", clientKey: "I0iTjxmaBUQuRnOfu459KTxrGRQT0SDwB13MYG9a")
+        
+        // Register for Push Notitications
+        
+        let notificationTypes: UIUserNotificationType = (.Alert | .Badge | .Sound)
+        let notificationSettings: UIUserNotificationSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: nil)
+        
+        application.registerUserNotificationSettings(notificationSettings)
+        
         return true
+    }
+    
+    func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
+       application.registerForRemoteNotifications()
+    }
+    
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        let currentInstallation: PFInstallation = PFInstallation.currentInstallation()
+        currentInstallation.setDeviceTokenFromData(deviceToken)
+        currentInstallation.saveInBackground()
+    }
+    
+    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+        // Registration failed (probably because you can't use push in Simulator
+        println(error.localizedDescription)
+    }
+    
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        PFPush.handlePush(userInfo)
     }
 
     func applicationWillResignActive(application: UIApplication) {
