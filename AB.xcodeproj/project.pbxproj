@@ -363,6 +363,19 @@
 			knownRegions = (
 				en,
 				Base,
+				de,
+				el,
+				es,
+				fr,
+				it,
+				ja,
+				nl,
+				"pt-PT",
+				pt,
+				ru,
+				sv,
+				th,
+				tr,
 			);
 			mainGroup = 9D01980619C5FB5500D7543D;
 			productRefGroup = 9D01981019C5FB5500D7543D /* Products */;

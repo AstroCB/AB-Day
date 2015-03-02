@@ -8,56 +8,44 @@
 
 import UIKit
 
-extension String {
-    public func split(separator: String) -> [String] {
-        if separator.isEmpty {
-            return map(self) { String($0) }
-        }
-        if var pre = self.rangeOfString(separator) {
-            var parts = [self.substringToIndex(pre.startIndex)]
-            while let rng = self.rangeOfString(separator, range: pre.endIndex..<endIndex) {
-                parts.append(self.substringWithRange(pre.endIndex..<rng.startIndex))
-                pre = rng
-            }
-            parts.append(self.substringWithRange(pre.endIndex..<endIndex))
-            return parts
-        } else {
-            return [self]
-        }
-    }
-}
-
 class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        initial = true
-        request = getData()
-        connected = true
         
-        calendar.backgroundColor = UIColor(white: 1, alpha: 0.5)
-        calendar.timeZone = NSTimeZone(abbreviation: "EDT")
+        self.setNeedsStatusBarAppearanceUpdate()
         
-        load(NSDate())
+        self.initial = true
+        self.request = getData()
+        self.connected = true
         
-        calendar.hidden = true
-        ab.hidden = false
-        another.hidden = false
-        reload.setTitle("Reload", forState: UIControlState.Normal)
+        self.calendar.backgroundColor = UIColor(white: 1, alpha: 0.5)
+        self.calendar.timeZone = NSTimeZone(abbreviation: "EDT")
+        
+        self.load(NSDate())
+        
+        self.calendar.hidden = true
+        self.ab.hidden = false
+        self.another.hidden = false
+        self.reload.setTitle("Reload", forState: UIControlState.Normal)
         
         // Set font sizes to fit screens properly
         if UIScreen.mainScreen().bounds.width < 375 {
-            dateString.font = UIFont.systemFontOfSize(20.00)
+            self.dateString.font = UIFont.systemFontOfSize(20.00)
         } else if UIScreen.mainScreen().bounds.width == 375{
-            dateString.font = UIFont.systemFontOfSize(25.00)
+            self.dateString.font = UIFont.systemFontOfSize(25.00)
         } else {
-            dateString.font = UIFont.systemFontOfSize(30.00)
+            self.dateString.font = UIFont.systemFontOfSize(30.00)
         }
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
     }
     
     @IBOutlet weak var ab: UILabel!
@@ -85,76 +73,76 @@ class ViewController: UIViewController {
     }
     
     @IBAction func getDate() {
-        if(today) { // Toggle button function between one that loads today and one that opens the datepicker (messy to avoid adding another button)
-            calendar.setDate(NSDate(), animated: true)
-            today = false
+        if self.today { // Toggle button function between one that loads today and one that opens the datepicker (messy to avoid adding another button)
+            self.calendar.setDate(NSDate(), animated: true)
+            self.today = false
         } else {
-            calendar.hidden = false
-            ab.hidden = true
+            self.calendar.hidden = false
+            self.ab.hidden = true
             
-            another.setTitle("Today", forState: UIControlState.Normal)
-            reload.setTitle("Load", forState: UIControlState.Normal)
+            self.another.setTitle("Today", forState: UIControlState.Normal)
+            self.reload.setTitle("Load", forState: UIControlState.Normal)
             
-            today = true
+            self.today = true
         }
     }
     
     @IBAction func refresh() {
-        reload.setTitle("Reload", forState: UIControlState.Normal)
-        another.setTitle("Another Date?", forState: UIControlState.Normal)
+        self.reload.setTitle("Reload", forState: UIControlState.Normal)
+        self.another.setTitle("Another Date?", forState: UIControlState.Normal)
         
-        if(connected) {
-            load(calendar.date)
-            today = false
+        if self.connected {
+            self.load(calendar.date)
+            self.today = false
         } else {
-            request = getData()
-            connected = true
+            self.request = getData()
+            self.connected = true
         }
     }
     
     func getData() -> NSData? {
-        return getJSON("https://dl.dropboxusercontent.com/u/56017856/dates.json")
+        return self.getJSON("https://dl.dropboxusercontent.com/u/56017856/dates.json")
     }
     
     func load(date: NSDate) {
-        calendar.hidden = true
-        ab.hidden = false
-        another.hidden = false
+        self.calendar.hidden = true
+        self.ab.hidden = false
+        self.another.hidden = false
         
         // Make date readable; display it
         let dateFormatter: NSDateFormatter = NSDateFormatter()
         dateFormatter.dateStyle = .FullStyle
         
         let strDate = dateFormatter.stringFromDate(date)
-        dateString.text = strDate
+        self.dateString.text = strDate
         
-        if let req = request {
-            var data = parseJSON(req)!
+        if let req = self.request {
+            var data = self.parseJSON(req)!
             
             dateFormatter.dateStyle = .ShortStyle
-            let keyArr: [String] = dateFormatter.stringFromDate(date).split("/")
+            let keyArr: [String] = dateFormatter.stringFromDate(date).componentsSeparatedByString("/")
             let keyStr = "\(keyArr[0] + keyArr[1])20\(keyArr[2])"
             
             if let maxDate: String = data.valueForKey("maxDate") as? String {
-                calendar.maximumDate = dateFormatter.dateFromString(maxDate)
+                self.calendar.maximumDate = dateFormatter.dateFromString(maxDate)
             }
             
             if let abDay: String = data.valueForKey(keyStr) as? String {
                 if abDay == "PD" {
-                    ab.font = UIFont.systemFontOfSize(20)
-                    ab.numberOfLines = 2 // Add a line to fit the following
-                    ab.text = "Professional Development Day\n(No School)"
+                    self.ab.font = UIFont.systemFontOfSize(20)
+                    self.ab.numberOfLines = 2 // Add a line to fit the following
+                    self.ab.text = "Professional Development Day\n(No School)"
                 } else {
-                    ab.font = UIFont.systemFontOfSize(100)
-                    ab.numberOfLines = 1
-                    ab.text = abDay
+                    self.ab.font = UIFont.systemFontOfSize(100)
+                    self.ab.numberOfLines = 1
+                    self.ab.text = abDay
                 }
             } else {
-                ab.font = UIFont.systemFontOfSize(20)
-                ab.text = "No School"
+                self.ab.font = UIFont.systemFontOfSize(20)
+                self.ab.text = "No School"
             }
         } else {
-            connected = false
+            self.connected = false
         }
     }
 }

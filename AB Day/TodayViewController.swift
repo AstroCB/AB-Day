@@ -9,25 +9,6 @@
 import UIKit
 import NotificationCenter
 
-extension String {
-    public func split(separator: String) -> [String] {
-        if separator.isEmpty {
-            return map(self) { String($0) }
-        }
-        if var pre = self.rangeOfString(separator) {
-            var parts = [self.substringToIndex(pre.startIndex)]
-            while let rng = self.rangeOfString(separator, range: pre.endIndex..<endIndex) {
-                parts.append(self.substringWithRange(pre.endIndex..<rng.startIndex))
-                pre = rng
-            }
-            parts.append(self.substringWithRange(pre.endIndex..<endIndex))
-            return parts
-        } else {
-            return [self]
-        }
-    }
-}
-
 class TodayViewController: UIViewController, NCWidgetProviding {
     
     @IBOutlet weak var abField: UILabel!
@@ -61,7 +42,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
                 let date: NSDate = NSDate()
                 let dateFormatter = NSDateFormatter()
                 dateFormatter.dateStyle = .ShortStyle
-                let keyArr: [String] = dateFormatter.stringFromDate(date).split("/")
+                let keyArr: [String] = dateFormatter.stringFromDate(date).componentsSeparatedByString("/")
                 
                 let keyStr: String = "\(keyArr[0] + keyArr[1])20\(keyArr[2])"
                 return newData.valueForKey(keyStr) as? String
@@ -77,15 +58,15 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         // If there's no update required, use NCUpdateResult.NoData
         // If there's an update, use NCUpdateResult.NewData
         
-        if let abDay: String = getData() {
+        if let abDay: String = self.getData() {
             if abDay == "no_connection" {
-                abField.text = "-"
+                self.abField.text = "-"
                 completionHandler(NCUpdateResult.Failed)
             } else {
-                abField.text = abDay + " Day"
+                self.abField.text = abDay + " Day"
             }
         } else {
-            abField.text = "No School"
+            self.abField.text = "No School"
         }
         
         completionHandler(NCUpdateResult.NewData)
