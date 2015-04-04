@@ -1,26 +1,88 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="6724" systemVersion="14A389" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc">
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="6751" systemVersion="14D130a" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6711"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="3735"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="3737"/>
     </dependencies>
     <scenes>
         <!--Interface Controller-->
         <scene sceneID="aou-V4-d1y">
             <objects>
-                <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModuleProvider="target"/>
+                <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="AB_WatchKit_App" customModuleProvider="target">
+                    <items>
+                        <group width="1" height="110" alignment="left" layout="vertical" id="dLV-2y-kem">
+                            <items>
+                                <label alignment="center" verticalAlignment="center" text="-" id="pkF-uV-g8K"/>
+                            </items>
+                        </group>
+                        <button width="1" alignment="center" verticalAlignment="bottom" title="Later" id="FY8-Xw-fUQ">
+                            <connections>
+                                <segue destination="Jq2-3E-y0b" kind="push" identifier="toWeekView" id="tac-WJ-KXT"/>
+                            </connections>
+                        </button>
+                    </items>
+                    <color key="backgroundColor" red="0.039259202780000002" green="0.33943036199999999" blue="0.84183466429999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <connections>
+                        <outlet property="day" destination="pkF-uV-g8K" id="Jz1-Zz-LVO"/>
+                        <outlet property="later" destination="FY8-Xw-fUQ" id="AxI-qj-OLd"/>
+                    </connections>
+                </controller>
             </objects>
-            <point key="canvasLocation" x="235" y="347"/>
+            <point key="canvasLocation" x="235" y="347.25"/>
+        </scene>
+        <!--Today-->
+        <scene sceneID="GIL-BC-hTp">
+            <objects>
+                <controller title="Today" id="Jq2-3E-y0b" customClass="WeekViewController" customModule="AB_WatchKit_Extension">
+                    <items>
+                        <table alignment="left" id="WAI-aD-0W6">
+                            <items>
+                                <tableRow identifier="DayRow" id="iPW-Sf-SQP" customClass="TableRowController" customModule="AB_WatchKit_Extension">
+                                    <group key="rootItem" width="1" alignment="left" id="Kp1-ZM-j3A">
+                                        <items>
+                                            <label alignment="left" verticalAlignment="center" text="Date" id="UBE-Es-gyq"/>
+                                            <label alignment="right" verticalAlignment="center" text="-" id="Kil-JE-i7U"/>
+                                        </items>
+                                        <color key="backgroundColor" red="0.039259202780000002" green="0.33943036199999999" blue="0.84183466429999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </group>
+                                    <connections>
+                                        <outlet property="dateLabel" destination="UBE-Es-gyq" id="QpD-OF-JO7"/>
+                                        <outlet property="dayTypeLabel" destination="Kil-JE-i7U" id="qN7-J1-Fpo"/>
+                                    </connections>
+                                </tableRow>
+                            </items>
+                        </table>
+                    </items>
+                    <connections>
+                        <outlet property="dayTable" destination="WAI-aD-0W6" id="uX6-BZ-eu4"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="413" y="348"/>
         </scene>
         <!--Glance Interface Controller-->
         <scene sceneID="BOz-TT-tkC">
             <objects>
-                <glanceController spacing="0.0" id="0uZ-2p-rRc" customClass="GlanceController" customModuleProvider="target">
+                <glanceController spacing="0.0" id="0uZ-2p-rRc" customClass="GlanceController" customModule="AB_WatchKit_App" customModuleProvider="target">
                     <items>
-                        <group alignment="left" id="t8f-Gd-c4y"/>
-                        <group alignment="left" id="uCw-4Q-Ouw"/>
+                        <group alignment="left" id="t8f-Gd-c4y">
+                            <items>
+                                <dateLabel alignment="left" id="BYa-Lq-4ha">
+                                    <dateFormatterStyle key="dateStyle" none="YES" medium="YES"/>
+                                </dateLabel>
+                            </items>
+                        </group>
+                        <group alignment="left" id="uCw-4Q-Ouw">
+                            <items>
+                                <label alignment="center" verticalAlignment="center" text="-" id="8Sk-Fs-MMP"/>
+                            </items>
+                            <color key="backgroundColor" red="0.039259202780000002" green="0.33943036199999999" blue="0.84183466429999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </group>
                     </items>
                     <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="14"/>
+                    <connections>
+                        <outlet property="day" destination="8Sk-Fs-MMP" id="FQz-5g-GA7"/>
+                    </connections>
                 </glanceController>
             </objects>
             <point key="canvasLocation" x="235" y="672"/>
@@ -44,7 +106,7 @@
         <!--Notification Controller-->
         <scene sceneID="KIl-fV-djm">
             <objects>
-                <controller id="gdX-wl-uQE" customClass="NotificationController" customModuleProvider="target"/>
+                <controller id="gdX-wl-uQE" customClass="NotificationController" customModule="AB_WatchKit_App" customModuleProvider="target"/>
             </objects>
             <point key="canvasLocation" x="553" y="1001"/>
         </scene>

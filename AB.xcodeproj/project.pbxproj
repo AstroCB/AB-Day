@@ -15,6 +15,8 @@
 		9D40BBFA1A2D5EFD00ADF0BF /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D40BBF91A2D5EFD00ADF0BF /* TodayViewController.swift */; };
 		9D40BBFC1A2D5EFD00ADF0BF /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D40BBFB1A2D5EFD00ADF0BF /* MainInterface.storyboard */; };
 		9D40BBFF1A2D5EFD00ADF0BF /* AB Day.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 9D40BBF41A2D5EFD00ADF0BF /* AB Day.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		9D7C2E1F1AD02BD000E57D0C /* TableRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7C2E1E1AD02BD000E57D0C /* TableRowController.swift */; };
+		9D7C2E211AD02CED00E57D0C /* WeekViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7C2E201AD02CED00E57D0C /* WeekViewController.swift */; };
 		9DA3318F19E897FE007C9EBF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DA3318E19E897FE007C9EBF /* Images.xcassets */; };
 		9DA7F2671A3DEC8D00D30FA0 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DA7F2661A3DEC8D00D30FA0 /* AudioToolbox.framework */; };
 		9DA7F2691A3DEC9400D30FA0 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DA7F2681A3DEC9400D30FA0 /* CFNetwork.framework */; };
@@ -102,6 +104,8 @@
 		9D40BBFB1A2D5EFD00ADF0BF /* MainInterface.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainInterface.storyboard; sourceTree = "<group>"; };
 		9D561FB71A1FEE5800DCA604 /* WatchKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WatchKit.framework; path = System/Library/Frameworks/WatchKit.framework; sourceTree = SDKROOT; };
 		9D57C5061A09ADD4005609F9 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
+		9D7C2E1E1AD02BD000E57D0C /* TableRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableRowController.swift; sourceTree = "<group>"; };
+		9D7C2E201AD02CED00E57D0C /* WeekViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekViewController.swift; sourceTree = "<group>"; };
 		9DA3318E19E897FE007C9EBF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		9DA7F2661A3DEC8D00D30FA0 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		9DA7F2681A3DEC9400D30FA0 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -317,6 +321,8 @@
 			isa = PBXGroup;
 			children = (
 				9DEBBC171ACF8F7A0014C3BF /* InterfaceController.swift */,
+				9D7C2E201AD02CED00E57D0C /* WeekViewController.swift */,
+				9D7C2E1E1AD02BD000E57D0C /* TableRowController.swift */,
 				9DEBBC191ACF8F7A0014C3BF /* NotificationController.swift */,
 				9DEBBC1B1ACF8F7A0014C3BF /* GlanceController.swift */,
 				9DEBBC1D1ACF8F7A0014C3BF /* Images.xcassets */,
@@ -591,9 +597,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D7C2E211AD02CED00E57D0C /* WeekViewController.swift in Sources */,
 				9DEBBC1A1ACF8F7A0014C3BF /* NotificationController.swift in Sources */,
 				9DEBBC181ACF8F7A0014C3BF /* InterfaceController.swift in Sources */,
 				9DEBBC1C1ACF8F7A0014C3BF /* GlanceController.swift in Sources */,
+				9D7C2E1F1AD02BD000E57D0C /* TableRowController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -945,6 +953,7 @@
 				9DEBBC331ACF8F7A0014C3BF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9DEBBC351ACF8F7A0014C3BF /* Build configuration list for PBXNativeTarget "AB WatchKit Extension" */ = {
 			isa = XCConfigurationList;
@@ -953,6 +962,7 @@
 				9DEBBC311ACF8F7A0014C3BF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
