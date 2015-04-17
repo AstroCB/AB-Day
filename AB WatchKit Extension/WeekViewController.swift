@@ -40,7 +40,13 @@ class WeekViewController: WKInterfaceController {
         for (index, vals) in enumerate(sortedArr) { // Format -> index: Int, (day, dayType): (String, String)
             if let row: TableRowController = self.dayTable.rowControllerAtIndex(index) as? TableRowController {
                 row.dateLabel.setText(vals.0) // Set day
-                row.dayTypeLabel.setText(vals.1) // Set day type
+                var displayString: String = ""
+                if vals.1 == "No School" {
+                    displayString = vals.1
+                } else {
+                    displayString = vals.1 + " Day"
+                }
+                row.dayTypeLabel.setText(displayString) // Set day type
             }
         }
     }

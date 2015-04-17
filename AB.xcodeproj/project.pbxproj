@@ -484,6 +484,7 @@
 					};
 					9DEBBC201ACF8F7A0014C3BF = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = VFK9RBFX9F;
 					};
 				};
 			};
@@ -878,6 +879,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -896,6 +898,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				IBSC_MODULE = AB_WatchKit_Extension;
 				INFOPLIST_FILE = "AB WatchKit App/Info.plist";

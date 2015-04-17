@@ -95,7 +95,7 @@ class ViewController: UIViewController {
             self.load(calendar.date)
             self.today = false
         } else {
-            self.request = getData()
+            self.request = self.getData()
             self.connected = true
         }
     }
