@@ -32,7 +32,6 @@
 		9DA7F2811A3DED0C00D30FA0 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DA7F2801A3DED0C00D30FA0 /* libsqlite3.dylib */; };
 		9DA7F2881A3DF05300D30FA0 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DA7F2831A3DF05300D30FA0 /* Bolts.framework */; };
 		9DA7F2891A3DF05300D30FA0 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DA7F2841A3DF05300D30FA0 /* Parse.framework */; };
-		9DA7F28A1A3DF05400D30FA0 /* ParseCrashReporting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DA7F2851A3DF05300D30FA0 /* ParseCrashReporting.framework */; };
 		9DA7F28B1A3DF05400D30FA0 /* ParseFacebookUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DA7F2861A3DF05300D30FA0 /* ParseFacebookUtils.framework */; };
 		9DA7F28C1A3DF05400D30FA0 /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DA7F2871A3DF05300D30FA0 /* ParseUI.framework */; };
 		9DEBBC181ACF8F7A0014C3BF /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DEBBC171ACF8F7A0014C3BF /* InterfaceController.swift */; };
@@ -173,7 +172,6 @@
 				9DA7F27D1A3DECF800D30FA0 /* SystemConfiguration.framework in Frameworks */,
 				9DA7F2881A3DF05300D30FA0 /* Bolts.framework in Frameworks */,
 				9DA7F2711A3DECB200D30FA0 /* QuartzCore.framework in Frameworks */,
-				9DA7F28A1A3DF05400D30FA0 /* ParseCrashReporting.framework in Frameworks */,
 				9DA7F28C1A3DF05400D30FA0 /* ParseUI.framework in Frameworks */,
 				9DA7F2891A3DF05300D30FA0 /* Parse.framework in Frameworks */,
 				9DA7F28B1A3DF05400D30FA0 /* ParseFacebookUtils.framework in Frameworks */,
@@ -811,10 +809,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -831,10 +826,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = ABTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cameronbernhardt.$(PRODUCT_NAME:rfc1034identifier)";

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>AB Day.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>AB WatchKit App.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+		<key>AB.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<true/>
+			<key>orderHint</key>
+			<integer>0</integer>
+		</dict>
+		<key>Glance - AB WatchKit App.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
+		<key>Notification - AB WatchKit App.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>9D01980E19C5FB5500D7543D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9D01982319C5FB5600D7543D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9D40BBF31A2D5EFD00ADF0BF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9D561FB51A1FEE5800DCA604</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9D561FC61A1FEE5900DCA604</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9D57C52D1A09B45D005609F9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9DEBBC201ACF8F7A0014C3BF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>
