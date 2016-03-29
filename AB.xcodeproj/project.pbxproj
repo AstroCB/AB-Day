@@ -11,6 +11,8 @@
 		9D01981719C5FB5500D7543D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D01981619C5FB5500D7543D /* ViewController.swift */; };
 		9D01981A19C5FB5500D7543D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D01981819C5FB5500D7543D /* Main.storyboard */; };
 		9D01982B19C5FB5600D7543D /* ABTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D01982A19C5FB5600D7543D /* ABTests.swift */; };
+		9D3C9B4F1CAAEEC9004EF797 /* AB WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 9DEBBC121ACF8F7A0014C3BF /* AB WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		9D3C9B521CAAEEC9004EF797 /* AB WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 9DEBBC211ACF8F7A0014C3BF /* AB WatchKit App.app */; };
 		9D40BBF51A2D5EFD00ADF0BF /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D57C5061A09ADD4005609F9 /* NotificationCenter.framework */; };
 		9D40BBFA1A2D5EFD00ADF0BF /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D40BBF91A2D5EFD00ADF0BF /* TodayViewController.swift */; };
 		9D40BBFC1A2D5EFD00ADF0BF /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D40BBFB1A2D5EFD00ADF0BF /* MainInterface.storyboard */; };
@@ -37,10 +39,8 @@
 		9DEBBC1A1ACF8F7A0014C3BF /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DEBBC191ACF8F7A0014C3BF /* NotificationController.swift */; };
 		9DEBBC1C1ACF8F7A0014C3BF /* GlanceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DEBBC1B1ACF8F7A0014C3BF /* GlanceController.swift */; };
 		9DEBBC1E1ACF8F7A0014C3BF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DEBBC1D1ACF8F7A0014C3BF /* Images.xcassets */; };
-		9DEBBC221ACF8F7A0014C3BF /* AB WatchKit App.app in Resources */ = {isa = PBXBuildFile; fileRef = 9DEBBC211ACF8F7A0014C3BF /* AB WatchKit App.app */; };
 		9DEBBC2A1ACF8F7A0014C3BF /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9DEBBC281ACF8F7A0014C3BF /* Interface.storyboard */; };
 		9DEBBC2C1ACF8F7A0014C3BF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DEBBC2B1ACF8F7A0014C3BF /* Images.xcassets */; };
-		9DEBBC2F1ACF8F7A0014C3BF /* AB WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 9DEBBC121ACF8F7A0014C3BF /* AB WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +51,20 @@
 			remoteGlobalIDString = 9D01980E19C5FB5500D7543D;
 			remoteInfo = AB;
 		};
+		9D3C9B4D1CAAEEC9004EF797 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9D01980719C5FB5500D7543D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9DEBBC111ACF8F7A0014C3BF;
+			remoteInfo = "AB WatchKit Extension";
+		};
+		9D3C9B501CAAEEC9004EF797 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9D01980719C5FB5500D7543D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9DEBBC201ACF8F7A0014C3BF;
+			remoteInfo = "AB WatchKit App";
+		};
 		9D40BBFD1A2D5EFD00ADF0BF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 9D01980719C5FB5500D7543D /* Project object */;
@@ -58,30 +72,37 @@
 			remoteGlobalIDString = 9D40BBF31A2D5EFD00ADF0BF;
 			remoteInfo = "AB Day";
 		};
-		9DEBBC231ACF8F7A0014C3BF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9D01980719C5FB5500D7543D /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 9DEBBC201ACF8F7A0014C3BF;
-			remoteInfo = "AB WatchKit App";
-		};
-		9DEBBC2D1ACF8F7A0014C3BF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9D01980719C5FB5500D7543D /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 9DEBBC111ACF8F7A0014C3BF;
-			remoteInfo = "AB WatchKit Extension";
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		9D3C9B531CAAEEC9004EF797 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				9D3C9B4F1CAAEEC9004EF797 /* AB WatchKit Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9D3C9B541CAAEEC9004EF797 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				9D3C9B521CAAEEC9004EF797 /* AB WatchKit App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9D40BC031A2D5EFE00ADF0BF /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				9DEBBC2F1ACF8F7A0014C3BF /* AB WatchKit Extension.appex in Embed App Extensions */,
 				9D40BBFF1A2D5EFD00ADF0BF /* AB Day.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
@@ -369,12 +390,13 @@
 				9D01980C19C5FB5500D7543D /* Frameworks */,
 				9D01980D19C5FB5500D7543D /* Resources */,
 				9D40BC031A2D5EFE00ADF0BF /* Embed App Extensions */,
+				9D3C9B541CAAEEC9004EF797 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				9D40BBFE1A2D5EFD00ADF0BF /* PBXTargetDependency */,
-				9DEBBC2E1ACF8F7A0014C3BF /* PBXTargetDependency */,
+				9D3C9B511CAAEEC9004EF797 /* PBXTargetDependency */,
 			);
 			name = AB;
 			productName = AB;
@@ -427,27 +449,28 @@
 			buildRules = (
 			);
 			dependencies = (
-				9DEBBC241ACF8F7A0014C3BF /* PBXTargetDependency */,
 			);
 			name = "AB WatchKit Extension";
 			productName = "AB WatchKit Extension";
 			productReference = 9DEBBC121ACF8F7A0014C3BF /* AB WatchKit Extension.appex */;
-			productType = "com.apple.product-type.watchkit-extension";
+			productType = "com.apple.product-type.watchkit2-extension";
 		};
 		9DEBBC201ACF8F7A0014C3BF /* AB WatchKit App */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9DEBBC341ACF8F7A0014C3BF /* Build configuration list for PBXNativeTarget "AB WatchKit App" */;
 			buildPhases = (
 				9DEBBC1F1ACF8F7A0014C3BF /* Resources */,
+				9D3C9B531CAAEEC9004EF797 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				9D3C9B4E1CAAEEC9004EF797 /* PBXTargetDependency */,
 			);
 			name = "AB WatchKit App";
 			productName = "AB WatchKit App";
 			productReference = 9DEBBC211ACF8F7A0014C3BF /* AB WatchKit App.app */;
-			productType = "com.apple.product-type.application.watchapp";
+			productType = "com.apple.product-type.application.watchapp2";
 		};
 /* End PBXNativeTarget section */
 
@@ -455,7 +478,8 @@
 		9D01980719C5FB5500D7543D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0600;
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = "Cameron Bernhardt";
 				TargetAttributes = {
 					9D01980E19C5FB5500D7543D = {
@@ -553,7 +577,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9DEBBC1E1ACF8F7A0014C3BF /* Images.xcassets in Resources */,
-				9DEBBC221ACF8F7A0014C3BF /* AB WatchKit App.app in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -614,20 +637,20 @@
 			target = 9D01980E19C5FB5500D7543D /* AB */;
 			targetProxy = 9D01982519C5FB5600D7543D /* PBXContainerItemProxy */;
 		};
+		9D3C9B4E1CAAEEC9004EF797 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9DEBBC111ACF8F7A0014C3BF /* AB WatchKit Extension */;
+			targetProxy = 9D3C9B4D1CAAEEC9004EF797 /* PBXContainerItemProxy */;
+		};
+		9D3C9B511CAAEEC9004EF797 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9DEBBC201ACF8F7A0014C3BF /* AB WatchKit App */;
+			targetProxy = 9D3C9B501CAAEEC9004EF797 /* PBXContainerItemProxy */;
+		};
 		9D40BBFE1A2D5EFD00ADF0BF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 9D40BBF31A2D5EFD00ADF0BF /* AB Day */;
 			targetProxy = 9D40BBFD1A2D5EFD00ADF0BF /* PBXContainerItemProxy */;
-		};
-		9DEBBC241ACF8F7A0014C3BF /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 9DEBBC201ACF8F7A0014C3BF /* AB WatchKit App */;
-			targetProxy = 9DEBBC231ACF8F7A0014C3BF /* PBXContainerItemProxy */;
-		};
-		9DEBBC2E1ACF8F7A0014C3BF /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 9DEBBC111ACF8F7A0014C3BF /* AB WatchKit Extension */;
-			targetProxy = 9DEBBC2D1ACF8F7A0014C3BF /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -671,6 +694,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -745,6 +769,7 @@
 				INFOPLIST_FILE = AB/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cameronbernhardt.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -772,6 +797,7 @@
 				INFOPLIST_FILE = AB/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cameronbernhardt.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -794,6 +820,7 @@
 				);
 				INFOPLIST_FILE = ABTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cameronbernhardt.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AB.app/AB";
 			};
@@ -809,6 +836,7 @@
 				);
 				INFOPLIST_FILE = ABTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cameronbernhardt.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AB.app/AB";
 			};
@@ -826,6 +854,7 @@
 				INFOPLIST_FILE = "AB Day/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cameronbernhardt.AB.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -839,6 +868,7 @@
 				INFOPLIST_FILE = "AB Day/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cameronbernhardt.AB.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -856,8 +886,12 @@
 				INFOPLIST_FILE = "AB WatchKit Extension/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.cameronbernhardt.AB.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Debug;
 		};
@@ -870,8 +904,12 @@
 				INFOPLIST_FILE = "AB WatchKit Extension/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.cameronbernhardt.AB.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Release;
 		};
@@ -880,17 +918,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				IBSC_MODULE = AB_WatchKit_Extension;
 				INFOPLIST_FILE = "AB WatchKit App/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cameronbernhardt.AB.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
-				"TARGETED_DEVICE_FAMILY[sdk=iphonesimulator*]" = "1,4";
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Debug;
 		};
@@ -900,13 +940,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				IBSC_MODULE = AB_WatchKit_Extension;
 				INFOPLIST_FILE = "AB WatchKit App/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cameronbernhardt.AB.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
-				"TARGETED_DEVICE_FAMILY[sdk=iphonesimulator*]" = "1,4";
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Release;
 		};
