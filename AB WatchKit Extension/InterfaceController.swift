@@ -44,8 +44,7 @@ class InterfaceController: WKInterfaceController {
         if segueIdentifier == "toWeekView" {
             var daysDict: [String: String] = [String: String]()
             
-            let today: NSDate = NSDate()
-            for var i = 1; i < 6; i++ { // Get next five days
+            for i in 1 ..< 6 { // Get next five days
                 // Day from reference point (1..5)
                 let dayComponent: NSDateComponents = NSDateComponents()
                 dayComponent.day = i;
@@ -88,9 +87,12 @@ public func getDay(forDate date: NSDate) -> String? {
     
     if let req = data {
         var parsedData: NSDictionary?
-        var error: NSError?
-        if let JSON: NSDictionary = NSJSONSerialization.JSONObjectWithData(req, options: NSJSONReadingOptions.MutableContainers, error: &error) as? NSDictionary {
-            parsedData = JSON
+        do {
+            if let JSON: NSDictionary = try NSJSONSerialization.JSONObjectWithData(req, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary {
+                parsedData = JSON
+            }
+        } catch {
+            print("Fetch failed: \((error as NSError).localizedDescription)")
         }
         
         if let newData: NSDictionary = parsedData {

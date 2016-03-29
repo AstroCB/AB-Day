@@ -478,6 +478,7 @@
 		9D01980719C5FB5500D7543D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0730;
 				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = "Cameron Bernhardt";

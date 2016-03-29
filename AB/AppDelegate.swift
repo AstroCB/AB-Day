@@ -25,18 +25,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Parse.setApplicationId("WGmtjlRAoyLDAnsFkyAhM5YvuCA2cqeklcyBtwcz", clientKey: "I0iTjxmaBUQuRnOfu459KTxrGRQT0SDwB13MYG9a")
         
         // Register for Push Notifications
-        if let registration: AnyObject = NSClassFromString("UIUserNotificationSettings") { // iOS 8+
-            let notificationTypes: UIUserNotificationType = (.Alert | .Badge | .Sound)
+        if #available(iOS 8.0, *) {
+            let notificationTypes: UIUserNotificationType = ([.Alert, .Badge, .Sound])
             let notificationSettings: UIUserNotificationSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: nil)
-            
             application.registerUserNotificationSettings(notificationSettings)
-        } else { // iOS 7
-            application.registerForRemoteNotificationTypes(.Alert | .Badge | .Sound)
+        } else {
+            // Fallback on earlier versions
+            application.registerForRemoteNotificationTypes([.Alert, .Badge, .Sound])
         }
-        
         return true
     }
     
+    @available(iOS 8.0, *)
     func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
         application.registerForRemoteNotifications()
     }
@@ -49,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
         // Registration failed (probably because you can't use push in Simulator)
-        println(error.localizedDescription)
+        print(error.localizedDescription, terminator: "")
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {

@@ -33,9 +33,11 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         
         if let req = data {
             var parsedData: NSDictionary?
-            var error: NSError?
-            if let JSON: NSDictionary = NSJSONSerialization.JSONObjectWithData(req, options: NSJSONReadingOptions.MutableContainers, error: &error) as? NSDictionary {
+            do {
+                let JSON: NSDictionary = try NSJSONSerialization.JSONObjectWithData(req, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
                 parsedData = JSON
+            } catch {
+                print("Fetch failed: \((error as NSError).localizedDescription)")
             }
             
             if let newData = parsedData {
@@ -51,7 +53,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         return "no_connection"
     }
     
-    func widgetPerformUpdateWithCompletionHandler(completionHandler: ((NCUpdateResult) -> Void)!) {
+    func widgetPerformUpdateWithCompletionHandler(completionHandler: ((NCUpdateResult) -> Void)) {
         // Perform any setup necessary in order to update the view.
         
         // If an error is encountered, use NCUpdateResult.Failed

@@ -64,9 +64,12 @@ class ViewController: UIViewController {
     }
     
     func parseJSON(inputData: NSData) -> NSDictionary? {
-        var error: NSError?
-        if let JSON: NSDictionary = NSJSONSerialization.JSONObjectWithData(inputData, options: NSJSONReadingOptions.MutableContainers, error: &error) as? NSDictionary {
-            return JSON
+        do {
+            if let JSON: NSDictionary = try NSJSONSerialization.JSONObjectWithData(inputData, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary {
+                return JSON
+            }
+        } catch {
+            print("Fetch failed: \((error as NSError).localizedDescription)")
         }
         
         return nil
@@ -117,7 +120,7 @@ class ViewController: UIViewController {
         self.dateString.text = strDate
         
         if let req = self.request {
-            var data = self.parseJSON(req)!
+            let data = self.parseJSON(req)!
             
             dateFormatter.dateStyle = .ShortStyle
             let keyArr: [String] = dateFormatter.stringFromDate(date).componentsSeparatedByString("/")
