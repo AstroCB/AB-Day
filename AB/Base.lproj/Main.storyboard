@@ -57,7 +57,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <datePicker hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="ooc-tu-0tB">
-                                <rect key="frame" x="141" y="192" width="320" height="216"/>
+                                <rect key="frame" x="1" y="192" width="600" height="216"/>
                                 <date key="date" timeIntervalSinceReferenceDate="434066249.17616802">
                                     <!--2014-10-03 21:57:29 +0000-->
                                 </date>
@@ -77,6 +77,7 @@
                             <constraint firstAttribute="centerX" secondItem="I7U-06-fdL" secondAttribute="centerX" constant="-0.5" id="mlW-PS-rkP"/>
                             <constraint firstAttribute="centerX" secondItem="pjf-Cp-uny" secondAttribute="centerX" constant="-0.5" id="pTn-HJ-1cL"/>
                             <constraint firstAttribute="centerY" secondItem="kDp-qp-EYl" secondAttribute="centerY" constant="0.5" id="vzK-go-29R"/>
+                            <constraint firstItem="ooc-tu-0tB" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" id="z6p-CH-V6i"/>
                             <constraint firstAttribute="centerX" secondItem="kDp-qp-EYl" secondAttribute="centerX" id="zfO-Bt-9Ba"/>
                         </constraints>
                         <variation key="default">
