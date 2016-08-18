@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="7702" systemVersion="14E7f" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="11198.2" systemVersion="16A294a" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="3737"/>
+        <deployment identifier="watchOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="11077"/>
     </dependencies>
     <scenes>
         <!--Interface Controller-->
@@ -21,7 +22,7 @@
                             </connections>
                         </button>
                     </items>
-                    <color key="backgroundColor" red="0.039259202780000002" green="0.33943036199999999" blue="0.84183466429999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.047058902680873871" green="0.2392156571149826" blue="0.80392146110534668" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <connections>
                         <outlet property="day" destination="pkF-uV-g8K" id="Jz1-Zz-LVO"/>
                         <outlet property="later" destination="FY8-Xw-fUQ" id="AxI-qj-OLd"/>
@@ -43,7 +44,7 @@
                                             <label alignment="left" verticalAlignment="center" text="Date" id="UBE-Es-gyq"/>
                                             <label alignment="right" verticalAlignment="center" text="-" id="Kil-JE-i7U"/>
                                         </items>
-                                        <color key="backgroundColor" red="0.039259202780000002" green="0.33943036199999999" blue="0.84183466429999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="0.047058902680873871" green="0.2392156571149826" blue="0.80392146110534668" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </group>
                                     <connections>
                                         <outlet property="dateLabel" destination="UBE-Es-gyq" id="QpD-OF-JO7"/>
@@ -58,7 +59,7 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="413" y="348"/>
+            <point key="canvasLocation" x="497" y="346"/>
         </scene>
         <!--Glance Interface Controller-->
         <scene sceneID="BOz-TT-tkC">
@@ -68,7 +69,7 @@
                         <group alignment="left" id="102-wS-jmb">
                             <items>
                                 <dateLabel alignment="left" id="5Mn-qR-2ef">
-                                    <dateFormatterStyle key="dateStyle" none="YES" medium="YES"/>
+                                    <dateFormatterStyle key="dateStyle" medium="YES"/>
                                 </dateLabel>
                             </items>
                         </group>
@@ -77,7 +78,7 @@
                             <items>
                                 <label alignment="center" verticalAlignment="center" text="-" id="8Sk-Fs-MMP"/>
                             </items>
-                            <color key="backgroundColor" red="0.039259202780000002" green="0.33943036199999999" blue="0.84183466429999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="backgroundColor" red="0.047058902680873871" green="0.2392156571149826" blue="0.80392146110534668" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </group>
                     </items>
                     <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="14"/>
@@ -96,9 +97,9 @@
                         <label alignment="left" text="Alert Label" id="xBq-gF-XSV"/>
                     </items>
                     <notificationCategory key="notificationCategory" id="qct-2K-8d1">
-                        <color key="sashColor" red="0.039259202780000002" green="0.33943036199999999" blue="0.84183466429999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="sashColor" red="0.047058902680873871" green="0.2392156571149826" blue="0.80392146110534668" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </notificationCategory>
-                    <color key="backgroundColor" red="0.039259202780000002" green="0.33943036199999999" blue="0.84183466429999998" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.047058902680873871" green="0.2392156571149826" blue="0.80392146110534668" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                     <connections>
                         <outlet property="notificationAlertLabel" destination="xBq-gF-XSV" id="UMy-wg-ZwQ"/>
                     </connections>

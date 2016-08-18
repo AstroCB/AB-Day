@@ -13,9 +13,9 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     
     @IBOutlet weak var abField: UILabel!
     
-    func widgetMarginInsetsForProposedMarginInsets
-        (defaultMarginInsets: UIEdgeInsets) -> (UIEdgeInsets) {
-            return UIEdgeInsetsZero
+    func widgetMarginInsets
+        (forProposedMarginInsets defaultMarginInsets: UIEdgeInsets) -> (UIEdgeInsets) {
+            return UIEdgeInsets.zero
     }
     
     override func viewDidLoad() {
@@ -29,31 +29,31 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     }
     
     func getData() -> String? {
-        let data: NSData? = NSData(contentsOfURL: NSURL(string: "https://dl.dropboxusercontent.com/u/56017856/dates.json")!)
+        let data: Data? = try? Data(contentsOf: URL(string: "https://dl.dropboxusercontent.com/u/56017856/dates.json")!)
         
         if let req = data {
             var parsedData: NSDictionary?
             do {
-                let JSON: NSDictionary = try NSJSONSerialization.JSONObjectWithData(req, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
+                let JSON: NSDictionary = try JSONSerialization.jsonObject(with: req, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
                 parsedData = JSON
             } catch {
                 print("Fetch failed: \((error as NSError).localizedDescription)")
             }
             
             if let newData = parsedData {
-                let date: NSDate = NSDate()
-                let dateFormatter = NSDateFormatter()
-                dateFormatter.dateStyle = .ShortStyle
-                let keyArr: [String] = dateFormatter.stringFromDate(date).componentsSeparatedByString("/")
+                let date: Date = Date()
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateStyle = .short
+                let keyArr: [String] = dateFormatter.string(from: date).components(separatedBy: "/")
                 
                 let keyStr: String = "\(keyArr[0] + keyArr[1])20\(keyArr[2])"
-                return newData.valueForKey(keyStr) as? String
+                return newData.value(forKey: keyStr) as? String
             }
         }
         return "no_connection"
     }
     
-    func widgetPerformUpdateWithCompletionHandler(completionHandler: ((NCUpdateResult) -> Void)) {
+    func widgetPerformUpdate(completionHandler: ((NCUpdateResult) -> Void)) {
         // Perform any setup necessary in order to update the view.
         
         // If an error is encountered, use NCUpdateResult.Failed
@@ -63,7 +63,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         if let abDay: String = self.getData() {
             if abDay == "no_connection" {
                 self.abField.text = "-"
-                completionHandler(NCUpdateResult.Failed)
+                completionHandler(NCUpdateResult.failed)
             } else {
                 self.abField.text = abDay + " Day"
             }
@@ -71,7 +71,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
             self.abField.text = "No School"
         }
         
-        completionHandler(NCUpdateResult.NewData)
+        completionHandler(NCUpdateResult.newData)
     }
     
 }

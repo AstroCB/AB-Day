@@ -10,23 +10,12 @@ import WatchKit
 import Foundation
 
 
-class GlanceController: WKInterfaceController {
+class GlanceController: InterfaceController { // Subclass IC class b/c it does all the work already
     
-    @IBOutlet var day: WKInterfaceLabel!
-    
-    override func awakeWithContext(context: AnyObject?) {
-        super.awakeWithContext(context)
+    override func awake(withContext context: Any?) {
+        super.awake(withContext: context)
         
         // Configure interface objects here.
-        self.setLabelText("-", withSize: 100) // Initialize label
-        
-        if let abDay: String = getDay(forDate: NSDate()) {
-            if abDay != "failed" {
-                self.setLabelText(abDay + " Day", withSize: 45)
-            }
-        } else {
-            self.setLabelText("No School", withSize: 15)
-        }
     }
     
     
@@ -39,11 +28,4 @@ class GlanceController: WKInterfaceController {
         // This method is called when watch view controller is no longer visible
         super.didDeactivate()
     }
-    
-    func setLabelText(text: String, withSize size: CGFloat) {
-        let font: UIFont = UIFont.systemFontOfSize(size)
-        let attrString: NSAttributedString = NSAttributedString(string: text, attributes: [NSFontAttributeName: font])
-        self.day.setAttributedText(attrString)
-    }
-    
 }

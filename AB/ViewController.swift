@@ -8,6 +8,37 @@
 
 import UIKit
 
+struct JSON {
+    var url: String
+    
+    func load() -> Data? {
+        let urlT: URL = URL(string: url)!
+        do {
+            let data = try Data(contentsOf: urlT)
+            return data
+        } catch {
+            print("Error: " + error.localizedDescription)
+            return nil
+        }
+    }
+    
+    static func parse(_ data: Data?) -> NSDictionary {
+        if let inputData: Data = data {
+            do {
+                if let JSON: NSDictionary = try JSONSerialization.jsonObject(with: inputData, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary {
+                    return JSON
+                }
+            } catch {
+                print("Parse failed: \((error as NSError).localizedDescription)")
+            }
+        } else {
+            print("Cannot parse invalid data")
+        }
+        return NSDictionary()
+    }
+}
+
+
 class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,22 +51,22 @@ class ViewController: UIViewController {
         self.connected = true
         
         self.calendar.backgroundColor = UIColor(white: 1, alpha: 0.5)
-        self.calendar.timeZone = NSTimeZone(abbreviation: "EDT")
+        self.calendar.timeZone = TimeZone(abbreviation: "EDT")
         
-        self.load(NSDate())
+        self.load(Date())
         
-        self.calendar.hidden = true
-        self.ab.hidden = false
-        self.another.hidden = false
-        self.reload.setTitle("Reload", forState: UIControlState.Normal)
+        self.calendar.isHidden = true
+        self.ab.isHidden = false
+        self.another.isHidden = false
+        self.reload.setTitle("Reload", for: UIControlState())
         
         // Set font sizes to fit screens properly
-        if UIScreen.mainScreen().bounds.width < 375 {
-            self.dateString.font = UIFont.systemFontOfSize(20.00)
-        } else if UIScreen.mainScreen().bounds.width == 375{
-            self.dateString.font = UIFont.systemFontOfSize(25.00)
+        if UIScreen.main.bounds.width < 375 {
+            self.dateString.font = UIFont.systemFont(ofSize: 20.00)
+        } else if UIScreen.main.bounds.width == 375{
+            self.dateString.font = UIFont.systemFont(ofSize: 25.00)
         } else {
-            self.dateString.font = UIFont.systemFontOfSize(30.00)
+            self.dateString.font = UIFont.systemFont(ofSize: 30.00)
         }
     }
     
@@ -44,8 +75,8 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return UIStatusBarStyle.lightContent
     }
     
     @IBOutlet weak var ab: UILabel!
@@ -55,44 +86,28 @@ class ViewController: UIViewController {
     @IBOutlet weak var dateString: UILabel!
     
     var initial: Bool = true
-    var request: NSData?
+    var request: Data?
     var connected: Bool = true
     var today: Bool = false
     
-    func getJSON(urlToRequest: String) -> NSData? {
-        return NSData(contentsOfURL: NSURL(string: urlToRequest)!)
-    }
-    
-    func parseJSON(inputData: NSData) -> NSDictionary? {
-        do {
-            if let JSON: NSDictionary = try NSJSONSerialization.JSONObjectWithData(inputData, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary {
-                return JSON
-            }
-        } catch {
-            print("Fetch failed: \((error as NSError).localizedDescription)")
-        }
-        
-        return nil
-    }
-    
     @IBAction func getDate() {
         if self.today { // Toggle button function between one that loads today and one that opens the datepicker (messy to avoid adding another button)
-            self.calendar.setDate(NSDate(), animated: true)
+            self.calendar.setDate(Date(), animated: true)
             self.today = false
         } else {
-            self.calendar.hidden = false
-            self.ab.hidden = true
+            self.calendar.isHidden = false
+            self.ab.isHidden = true
             
-            self.another.setTitle("Today", forState: UIControlState.Normal)
-            self.reload.setTitle("Load", forState: UIControlState.Normal)
+            self.another.setTitle("Today", for: UIControlState())
+            self.reload.setTitle("Load", for: UIControlState())
             
             self.today = true
         }
     }
     
     @IBAction func refresh() {
-        self.reload.setTitle("Reload", forState: UIControlState.Normal)
-        self.another.setTitle("Another Date?", forState: UIControlState.Normal)
+        self.reload.setTitle("Reload", for: UIControlState())
+        self.another.setTitle("Another Date?", for: UIControlState())
         
         if self.connected {
             self.load(calendar.date)
@@ -103,45 +118,46 @@ class ViewController: UIViewController {
         }
     }
     
-    func getData() -> NSData? {
-        return self.getJSON("https://dl.dropboxusercontent.com/u/56017856/dates.json")
+    func getData() -> Data? {
+        let json: JSON = JSON(url: "https://dl.dropboxusercontent.com/u/56017856/dates.json")
+        return json.load()
     }
     
-    func load(date: NSDate) {
-        self.calendar.hidden = true
-        self.ab.hidden = false
-        self.another.hidden = false
+    func load(_ date: Date) {
+        self.calendar.isHidden = true
+        self.ab.isHidden = false
+        self.another.isHidden = false
         
         // Make date readable; display it
-        let dateFormatter: NSDateFormatter = NSDateFormatter()
-        dateFormatter.dateStyle = .FullStyle
+        let dateFormatter: DateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .full
         
-        let strDate = dateFormatter.stringFromDate(date)
+        let strDate = dateFormatter.string(from: date)
         self.dateString.text = strDate
         
         if let req = self.request {
-            let data = self.parseJSON(req)!
+            let data = JSON.parse(req)
             
-            dateFormatter.dateStyle = .ShortStyle
-            let keyArr: [String] = dateFormatter.stringFromDate(date).componentsSeparatedByString("/")
+            dateFormatter.dateStyle = .short
+            let keyArr: [String] = dateFormatter.string(from: date).components(separatedBy: "/")
             let keyStr = "\(keyArr[0] + keyArr[1])20\(keyArr[2])"
             
-            if let maxDate: String = data.valueForKey("maxDate") as? String {
-                self.calendar.maximumDate = dateFormatter.dateFromString(maxDate)
+            if let maxDate: String = data.value(forKey: "maxDate") as? String {
+                self.calendar.maximumDate = dateFormatter.date(from: maxDate)
             }
             
-            if let abDay: String = data.valueForKey(keyStr) as? String {
+            if let abDay: String = data.value(forKey: keyStr) as? String {
                 if abDay == "PD" {
-                    self.ab.font = UIFont.systemFontOfSize(20)
+                    self.ab.font = UIFont.systemFont(ofSize: 20)
                     self.ab.numberOfLines = 2 // Add a line to fit the following
                     self.ab.text = "Professional Development Day\n(No School)"
                 } else {
-                    self.ab.font = UIFont.systemFontOfSize(100)
+                    self.ab.font = UIFont.systemFont(ofSize: 100)
                     self.ab.numberOfLines = 1
                     self.ab.text = abDay
                 }
             } else {
-                self.ab.font = UIFont.systemFontOfSize(20)
+                self.ab.font = UIFont.systemFont(ofSize: 20)
                 self.ab.text = "No School"
             }
         } else {

@@ -12,8 +12,8 @@ class WeekViewController: WKInterfaceController {
     
     @IBOutlet var dayTable: WKInterfaceTable!
     
-    override func awakeWithContext(context: AnyObject?) {
-        super.awakeWithContext(context)
+    override func awake(withContext context: Any?) {
+        super.awake(withContext: context)
         // Configure interface objects here.
         if let data: [String: String] = context as? [String: String] {
             self.fillTable(data)
@@ -31,14 +31,14 @@ class WeekViewController: WKInterfaceController {
     }
     
     
-    func fillTable(data: [String: String]) {
+    func fillTable(_ data: [String: String]) {
         self.dayTable.setNumberOfRows(data.count, withRowType: "DayRow")
         
         // Sort by date
-        let sortedArr: [(String, String)] = data.sort({ a,b in return a.0 < b.0 })
+        let sortedArr: [(String, String)] = data.sorted(by: { a,b in return a.0 < b.0 })
         
-        for (index, vals) in sortedArr.enumerate() { // Format -> index: Int, (day, dayType): (String, String)
-            if let row: TableRowController = self.dayTable.rowControllerAtIndex(index) as? TableRowController {
+        for (index, vals) in sortedArr.enumerated() { // Format -> index: Int, (day, dayType): (String, String)
+            if let row: TableRowController = self.dayTable.rowController(at: index) as? TableRowController {
                 row.dateLabel.setText(vals.0) // Set day
                 var displayString: String = ""
                 if vals.1 == "No School" {

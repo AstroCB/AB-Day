@@ -9,25 +9,62 @@
 import WatchKit
 import Foundation
 
+struct JSON {
+    var url: String
+    
+    func load() -> Data? {
+        let urlT: URL = URL(string: url)!
+        do {
+            let data = try Data(contentsOf: urlT)
+            return data
+        } catch {
+            print("Error: " + error.localizedDescription)
+            return nil
+        }
+    }
+    
+    static func parse(_ data: Data?) -> NSDictionary {
+        if let inputData: Data = data {
+            do {
+                if let JSON: NSDictionary = try JSONSerialization.jsonObject(with: inputData, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary {
+                    return JSON
+                }
+            } catch {
+                print("Parse failed: \((error as NSError).localizedDescription)")
+            }
+        } else {
+            print("Cannot parse invalid data")
+        }
+        return NSDictionary()
+    }
+}
 
 class InterfaceController: WKInterfaceController {
     
     @IBOutlet var day: WKInterfaceLabel!
     @IBOutlet var later: WKInterfaceButton!
     
-    override func awakeWithContext(context: AnyObject?) {
-        super.awakeWithContext(context)
+    var data: Data?
+    
+    override func awake(withContext context: Any?) {
+        super.awake(withContext: context)
         
         // Configure interface objects here.
+        self.initConfig()
+    }
+    
+    public func initConfig() {
         self.setLabelText("-", withSize: 100) // Initialize label
         
-        if let abDay: String = getDay(forDate: NSDate()) {
+        if let abDay: String = getDay(forDate: Date()) {
             if abDay != "failed" {
                 self.setLabelText(abDay, withSize: 90)
             }
         } else {
             self.setLabelText("No School", withSize: 15)
         }
+        let json: JSON = JSON(url: "https://api.myjson.com/bins/1j05q")
+        data = json.load()
     }
     
     override func willActivate() {
@@ -40,23 +77,23 @@ class InterfaceController: WKInterfaceController {
         super.didDeactivate()
     }
     
-    override func contextForSegueWithIdentifier(segueIdentifier: String) -> AnyObject? {
+    override func contextForSegue(withIdentifier segueIdentifier: String) -> Any? {
         if segueIdentifier == "toWeekView" {
             var daysDict: [String: String] = [String: String]()
             
             for i in 1 ..< 6 { // Get next five days
                 // Day from reference point (1..5)
-                let dayComponent: NSDateComponents = NSDateComponents()
+                var dayComponent: DateComponents = DateComponents()
                 dayComponent.day = i;
                 
-                let cal: NSCalendar = NSCalendar.currentCalendar()
-                if let nextDate: NSDate = cal.dateByAddingComponents(dayComponent, toDate: NSDate(), options: NSCalendarOptions.MatchFirst) {
-                    
+                let cal: Calendar = Calendar.current
+                
+                if let nextDate: Date = cal.date(byAdding: dayComponent, to: Date()) {
                     // Formatted date
-                    let formatter: NSDateFormatter = NSDateFormatter()
-                    formatter.dateStyle = NSDateFormatterStyle.ShortStyle
+                    let formatter: DateFormatter = DateFormatter()
+                    formatter.dateStyle = DateFormatter.Style.short
                     
-                    let dayString: String = formatter.stringFromDate(nextDate) // Short date string for cell
+                    let dayString: String = formatter.string(from: nextDate) // Short date string for cell
                     
                     // Day value
                     if let dayType: String = getDay(forDate: nextDate) {
@@ -75,34 +112,23 @@ class InterfaceController: WKInterfaceController {
         return nil
     }
     
-    func setLabelText(text: String, withSize size: CGFloat) {
-        let font: UIFont = UIFont.systemFontOfSize(size)
+    func setLabelText(_ text: String, withSize size: CGFloat) {
+        let font: UIFont = UIFont.systemFont(ofSize: size)
         let attrString: NSAttributedString = NSAttributedString(string: text, attributes: [NSFontAttributeName: font])
         self.day.setAttributedText(attrString)
     }
-}
-
-public func getDay(forDate date: NSDate) -> String? {
-    let data: NSData? = NSData(contentsOfURL: NSURL(string: "https://dl.dropboxusercontent.com/u/56017856/dates.json")!)
     
-    if let req = data {
-        var parsedData: NSDictionary?
-        do {
-            if let JSON: NSDictionary = try NSJSONSerialization.JSONObjectWithData(req, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary {
-                parsedData = JSON
-            }
-        } catch {
-            print("Fetch failed: \((error as NSError).localizedDescription)")
-        }
-        
-        if let newData: NSDictionary = parsedData {
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.dateStyle = .ShortStyle
-            let keyArr: [String] = dateFormatter.stringFromDate(date).componentsSeparatedByString("/")
+    public func getDay(forDate date: Date) -> String? {
+        if let jData: Data = self.data {
+            let newData: NSDictionary = JSON.parse(jData)
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = .short
+            let keyArr: [String] = dateFormatter.string(from: date).components(separatedBy: "/")
             
             let keyStr: String = "\(keyArr[0] + keyArr[1])20\(keyArr[2])"
-            return newData.valueForKey(keyStr) as? String
+            return newData.value(forKey: keyStr) as? String
+            
         }
+        return "failed"
     }
-    return "failed"
 }
