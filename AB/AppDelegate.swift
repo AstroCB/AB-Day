@@ -14,8 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
-    
-    private func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         // Override point for customization after application launch.
         
         if(UIScreen.main.bounds.height <= 480.0) { // Don't show status bar on 4s (not enough room)
@@ -51,9 +50,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Registration failed (probably because you can't use push in Simulator)
         print(error.localizedDescription, terminator: "")
     }
-    
-    private func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : Any]) {
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
         PFPush.handle(userInfo)
+    }
+    
+    @available(iOS 9.0, *)
+    func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+        if let win: UIWindow = self.window, let vc: ViewController = win.rootViewController as? ViewController {
+            vc.getNext(shortcutItem.type)
+        }
     }
     
     func applicationWillResignActive(_ application: UIApplication) {

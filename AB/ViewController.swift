@@ -163,5 +163,42 @@ class ViewController: UIViewController {
         } else {
             self.connected = false
         }
+        return nil
+    }
+    
+    func getNext(_ type: String) {
+        let today: Date = Date()
+        let cal: Calendar = Calendar(identifier: .gregorian)
+        switch type {
+        case "tomorrow":
+            if let tom: Date = cal.date(byAdding: .day, value: 1, to: today) {
+                self.load(tom)
+            } else {
+                print("Tomorrow not a valid date")
+            }
+        case "aday":
+            var dayType: String = ""
+            var tempDay: Date = today
+            while(dayType != "A") {
+                if let nextDay: String = self.load(tempDay) {
+                    dayType = nextDay
+                }
+                tempDay = cal.date(byAdding: .day, value: 1, to: tempDay)!
+            }
+            self.load(tempDay)
+        case "bday":
+            var dayType: String = ""
+            var tempDay: Date = today
+            while(dayType != "B") {
+                if let nextDay: String = self.load(tempDay) {
+                    dayType = nextDay
+                }
+                tempDay = cal.date(byAdding: .day, value: 1, to: tempDay)!
+                print("\(tempDay): \(dayType)")
+            }
+            self.load(tempDay)
+        default:
+            print("3D Touch command unrecognized")
+        }
     }
 }

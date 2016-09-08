@@ -56,15 +56,16 @@ class InterfaceController: WKInterfaceController {
     public func initConfig() {
         self.setLabelText("-", withSize: 100) // Initialize label
         
+        let json: JSON = JSON(url: "https://cameronbernhardt.com/projects/ab-day/dates.json")
+        data = json.load()
         if let abDay: String = getDay(forDate: Date()) {
+            print(abDay)
             if abDay != "failed" {
                 self.setLabelText(abDay, withSize: 90)
             }
         } else {
             self.setLabelText("No School", withSize: 15)
         }
-        let json: JSON = JSON(url: "https://api.myjson.com/bins/1j05q")
-        data = json.load()
     }
     
     override func willActivate() {

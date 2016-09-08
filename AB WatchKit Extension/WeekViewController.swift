@@ -34,8 +34,9 @@ class WeekViewController: WKInterfaceController {
     func fillTable(_ data: [String: String]) {
         self.dayTable.setNumberOfRows(data.count, withRowType: "DayRow")
         
-        // Sort by date
-        let sortedArr: [(String, String)] = data.sorted(by: { a,b in return a.0 < b.0 })
+        // Sort string dates by converting them to Dates and using the built-in comparison operator
+        let sortedArr: [(String, String)] = data.sorted(by: { a,b in return td(a.0) < td(b.0) })
+        print(sortedArr)
         
         for (index, vals) in sortedArr.enumerated() { // Format -> index: Int, (day, dayType): (String, String)
             if let row: TableRowController = self.dayTable.rowController(at: index) as? TableRowController {
@@ -49,5 +50,24 @@ class WeekViewController: WKInterfaceController {
                 row.dayTypeLabel.setText(displayString) // Set day type
             }
         }
+    }
+    
+    /**
+     Converts `String` to `Date`
+     - parameters:
+        - dateString: `String` in desired format
+        - format: Format to use for conversion (default `M/dd/yy`) – see [formatting docs](http://userguide.icu-project.org/formatparse/datetime/)
+     - returns: Converted `Date` object
+     */
+    func td(_ dateString: String, withFormat format: String = "M/dd/yy") -> Date {
+        let dFormat: DateFormatter = DateFormatter()
+        dFormat.dateFormat = format
+        if let d: Date = dFormat.date(from: dateString) {
+            return d
+        } else if format == "M/dd/yy" {
+            // 1 recursion max
+            return td(dateString, withFormat: "MM/dd/yy")
+        }
+        return Date()
     }
 }
