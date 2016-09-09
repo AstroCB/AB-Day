@@ -58,6 +58,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
         if let win: UIWindow = self.window, let vc: ViewController = win.rootViewController as? ViewController {
             vc.getNext(shortcutItem.type)
+        } else {
+            DispatchQueue.global().async {
+                DispatchQueue.main.async {
+                    (self.window?.rootViewController as! ViewController).getNext(shortcutItem.type)
+                }
+            }
         }
     }
     

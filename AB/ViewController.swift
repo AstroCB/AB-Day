@@ -110,7 +110,7 @@ class ViewController: UIViewController {
         self.another.setTitle("Another Date?", for: UIControlState())
         
         if self.connected {
-            self.load(calendar.date)
+            self.load(self.calendar.date)
             self.today = false
         } else {
             self.request = self.getData()
@@ -140,7 +140,7 @@ class ViewController: UIViewController {
             
             dateFormatter.dateStyle = .short
             let keyArr: [String] = dateFormatter.string(from: date).components(separatedBy: "/")
-            let keyStr = "\(keyArr[0] + keyArr[1])20\(keyArr[2])"
+            let keyStr: String = "\(keyArr[0] + keyArr[1])20\(keyArr[2])"
             
             if let maxDate: String = data.value(forKey: "maxDate") as? String {
                 self.calendar.maximumDate = dateFormatter.date(from: maxDate)
@@ -163,42 +163,64 @@ class ViewController: UIViewController {
         } else {
             self.connected = false
         }
+    }
+    
+    func getDay(_ date: Date) -> String? {
+        let dateFormatter: DateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .short
+        let keyArr: [String] = dateFormatter.string(from: date).components(separatedBy: "/")
+        let keyStr: String = "\(keyArr[0] + keyArr[1])20\(keyArr[2])"
+        if let req = self.request {
+            let data = JSON.parse(req)
+            if let dateString: String = data.value(forKey: keyStr) as? String {
+                return dateString
+            } else {
+                return "No School"
+            }
+        }
         return nil
+    }
+    
+    func searchNext(_ type: String, withCal cal: Calendar) -> Date {
+        var dayType: String = ""
+        var tempDay: Date = Date()
+        while(dayType != type) {
+            tempDay = cal.date(byAdding: .day, value: 1, to: tempDay)!
+            if let nextDay: String = self.getDay(tempDay) {
+                dayType = nextDay
+            }
+        }
+        return tempDay
     }
     
     func getNext(_ type: String) {
         let today: Date = Date()
         let cal: Calendar = Calendar(identifier: .gregorian)
+        var newDate: Date?
         switch type {
         case "tomorrow":
-            if let tom: Date = cal.date(byAdding: .day, value: 1, to: today) {
+            newDate = cal.date(byAdding: .day, value: 1, to: today)
+            if let tom: Date = newDate {
                 self.load(tom)
             } else {
                 print("Tomorrow not a valid date")
             }
         case "aday":
-            var dayType: String = ""
-            var tempDay: Date = today
-            while(dayType != "A") {
-                if let nextDay: String = self.load(tempDay) {
-                    dayType = nextDay
-                }
-                tempDay = cal.date(byAdding: .day, value: 1, to: tempDay)!
+            newDate = self.searchNext("A", withCal: cal)
+            if let aDay: Date = newDate {
+                self.load(aDay)
             }
-            self.load(tempDay)
         case "bday":
-            var dayType: String = ""
-            var tempDay: Date = today
-            while(dayType != "B") {
-                if let nextDay: String = self.load(tempDay) {
-                    dayType = nextDay
-                }
-                tempDay = cal.date(byAdding: .day, value: 1, to: tempDay)!
-                print("\(tempDay): \(dayType)")
+            newDate = self.searchNext("B", withCal: cal)
+            if let bDay: Date = newDate {
+                self.load(bDay)
             }
-            self.load(tempDay)
         default:
             print("3D Touch command unrecognized")
+        }
+        
+        if let nextDay: Date = newDate {
+            self.calendar.date = nextDay // Update calendar date so reload works properly
         }
     }
 }
