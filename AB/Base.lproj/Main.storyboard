@@ -55,7 +55,6 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <datePicker hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="ooc-tu-0tB">
-                                <color key="backgroundColor" red="0.039259202780000002" green="0.33943036199999999" blue="0.84183466429999998" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                 <date key="date" timeIntervalSinceReferenceDate="434066249.17616802">
                                     <!--2014-10-03 21:57:29 +0000-->
                                 </date>
