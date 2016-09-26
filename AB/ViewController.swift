@@ -58,7 +58,10 @@ class ViewController: UIViewController {
         self.calendar.isHidden = true
         self.ab.isHidden = false
         self.another.isHidden = false
-        self.reload.setTitle("Reload", for: UIControlState())
+        self.reload.isHidden = true
+        
+        self.configCircle()
+        self.configButtons()
         
         // Set font sizes to fit screens properly
         if UIScreen.main.bounds.width < 375 {
@@ -84,6 +87,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var calendar: UIDatePicker!
     @IBOutlet weak var another: UIButton!
     @IBOutlet weak var dateString: UILabel!
+    @IBOutlet var blurView: UIVisualEffectView!
+    @IBOutlet var circleView: UIView!
     
     var initial: Bool = true
     var request: Data?
@@ -96,17 +101,18 @@ class ViewController: UIViewController {
             self.today = false
         } else {
             self.calendar.isHidden = false
+            self.blurView.isHidden = false
             self.ab.isHidden = true
             
             self.another.setTitle("Today", for: UIControlState())
-            self.reload.setTitle("Load", for: UIControlState())
+            self.reload.isHidden = false
             
             self.today = true
         }
     }
     
     @IBAction func refresh() {
-        self.reload.setTitle("Reload", for: UIControlState())
+        self.reload.isHidden = true
         self.another.setTitle("Another Date?", for: UIControlState())
         
         if self.connected {
@@ -125,6 +131,7 @@ class ViewController: UIViewController {
     
     func load(_ date: Date) {
         self.calendar.isHidden = true
+        self.blurView.isHidden = true
         self.ab.isHidden = false
         self.another.isHidden = false
         
@@ -132,7 +139,7 @@ class ViewController: UIViewController {
         let dateFormatter: DateFormatter = DateFormatter()
         dateFormatter.dateStyle = .full
         
-        let strDate = dateFormatter.string(from: date)
+        let strDate: String = dateFormatter.string(from: date)
         self.dateString.text = strDate
         
         if let req = self.request {
@@ -148,17 +155,20 @@ class ViewController: UIViewController {
             
             if let abDay: String = data.value(forKey: keyStr) as? String {
                 if abDay == "PD" {
-                    self.ab.font = UIFont.systemFont(ofSize: 20)
+                    self.ab.font = UIFont.systemFont(ofSize: 25)
                     self.ab.numberOfLines = 2 // Add a line to fit the following
                     self.ab.text = "Professional Development Day\n(No School)"
+                    self.circleView.isHidden = true
                 } else {
-                    self.ab.font = UIFont.systemFont(ofSize: 100)
+                    self.ab.font = UIFont.systemFont(ofSize: 132)
                     self.ab.numberOfLines = 1
                     self.ab.text = abDay
+                    self.circleView.isHidden = false
                 }
             } else {
-                self.ab.font = UIFont.systemFont(ofSize: 20)
+                self.ab.font = UIFont.systemFont(ofSize: 50)
                 self.ab.text = "No School"
+                self.circleView.isHidden = true
             }
         } else {
             self.connected = false
@@ -222,5 +232,15 @@ class ViewController: UIViewController {
         if let nextDay: Date = newDate {
             self.calendar.date = nextDay // Update calendar date so reload works properly
         }
+    }
+    
+    func configCircle() {
+        self.circleView.layer.zPosition = -1 // Put circle view behind day type
+        self.circleView.layer.cornerRadius = 79  // Half of width
+    }
+    
+    func configButtons() {
+        self.reload.layer.cornerRadius = 29.5
+        self.another.layer.cornerRadius = 29.5
     }
 }
