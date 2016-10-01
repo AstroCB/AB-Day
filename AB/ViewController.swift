@@ -57,8 +57,8 @@ class ViewController: UIViewController {
         
         self.calendar.isHidden = true
         self.ab.isHidden = false
-        self.another.isHidden = false
-        self.reload.isHidden = true
+        self.todayButton.isHidden = true
+        self.loadButton.isHidden = true
         
         self.configCircle()
         self.configButtons()
@@ -71,6 +71,9 @@ class ViewController: UIViewController {
         } else {
             self.dateString.font = UIFont.systemFont(ofSize: 30.00)
         }
+        
+        // Initialize & keep track of top constant, which will be modified for layout purposes later
+        self.topConstant = self.circleTopConstraint.constant
     }
     
     override func didReceiveMemoryWarning() {
@@ -83,57 +86,59 @@ class ViewController: UIViewController {
     }
     
     @IBOutlet weak var ab: UILabel!
-    @IBOutlet weak var reload: UIButton!
+    @IBOutlet weak var loadButton: UIButton!
     @IBOutlet weak var calendar: UIDatePicker!
-    @IBOutlet weak var another: UIButton!
+    @IBOutlet weak var todayButton: UIButton!
     @IBOutlet weak var dateString: UILabel!
     @IBOutlet var blurView: UIVisualEffectView!
     @IBOutlet var circleView: UIView!
+    @IBOutlet var changeDate: UIButton!
+    @IBOutlet var circleTopConstraint: NSLayoutConstraint!
+    @IBOutlet var dateTopConstraint: NSLayoutConstraint!
     
     var initial: Bool = true
     var request: Data?
     var connected: Bool = true
-    var today: Bool = false
+    var topConstant: CGFloat = 34
     
-    @IBAction func getDate() {
-        if self.today { // Toggle button function between one that loads today and one that opens the datepicker (messy to avoid adding another button)
-            self.calendar.setDate(Date(), animated: true)
-            self.today = false
-        } else {
-            self.calendar.isHidden = false
-            self.blurView.isHidden = false
-            self.ab.isHidden = true
-            
-            self.another.setTitle("Today", for: UIControlState())
-            self.reload.isHidden = false
-            
-            self.today = true
-        }
+    @IBAction func setToday() {
+        self.calendar.setDate(Date(), animated: true)
     }
     
-    @IBAction func refresh() {
-        self.reload.isHidden = true
-        self.another.setTitle("Another Date?", for: UIControlState())
+    @IBAction func openCal() {
+        self.calendar.isHidden = false
+        self.blurView.isHidden = false
+        self.ab.isHidden = true
         
+        self.loadButton.isHidden = false
+        self.todayButton.isHidden = false
+        self.changeDate.isHidden = true
+    }
+    
+    @IBAction func loadFromCal() {
         if self.connected {
             self.load(self.calendar.date)
-            self.today = false
         } else {
+            // Leaving this here in case I change my mind, but for now, refreshing is disabled
+            // Now that I'm hosting it on my own site, I don't want people spamming it
             self.request = self.getData()
             self.connected = true
         }
     }
     
     func getData() -> Data? {
-        let json: JSON = JSON(url: "https://dl.dropboxusercontent.com/u/56017856/dates.json")
+        let json: JSON = JSON(url: "https://cameronbernhardt.com/projects/ab-day/dates.json")
         return json.load()
     }
     
     func load(_ date: Date) {
+        // Hide/unhide necessary elements
         self.calendar.isHidden = true
         self.blurView.isHidden = true
         self.ab.isHidden = false
-        self.another.isHidden = false
+        self.loadButton.isHidden = true
+        self.todayButton.isHidden = true
+        self.changeDate.isHidden = false
         
         // Make date readable; display it
         let dateFormatter: DateFormatter = DateFormatter()
@@ -154,21 +159,38 @@ class ViewController: UIViewController {
             }
             
             if let abDay: String = data.value(forKey: keyStr) as? String {
+                // Short code (PD/A/B/A*/B*)
                 if abDay == "PD" {
                     self.ab.font = UIFont.systemFont(ofSize: 25)
                     self.ab.numberOfLines = 2 // Add a line to fit the following
                     self.ab.text = "Professional Development Day\n(No School)"
-                    self.circleView.isHidden = true
+                    self.circleView.backgroundColor = self.circleView.backgroundColor?.withAlphaComponent(0)
                 } else {
                     self.ab.font = UIFont.systemFont(ofSize: 132)
                     self.ab.numberOfLines = 1
                     self.ab.text = abDay
-                    self.circleView.isHidden = false
+                    self.circleView.backgroundColor = self.circleView.backgroundColor?.withAlphaComponent(1)
+                }
+                
+                if UIScreen.main.bounds.height <= 568 { // iPhone 5 screen size; hardcoded vals are a last resort
+                    self.circleTopConstraint.constant = 0
+                    self.dateTopConstraint.constant = 15
+                } else {
+                    self.circleTopConstraint.constant = self.topConstant
+                    self.dateTopConstraint.constant = 25
                 }
             } else {
                 self.ab.font = UIFont.systemFont(ofSize: 50)
                 self.ab.text = "No School"
-                self.circleView.isHidden = true
+                self.circleView.backgroundColor = self.circleView.backgroundColor?.withAlphaComponent(0)
+                
+                if UIScreen.main.bounds.height <= 568 { // iPhone 5 screen size; hardcoded vals are a last resort
+                    self.circleTopConstraint.constant = -45
+                    self.dateTopConstraint.constant = -25
+                } else {
+                    self.circleTopConstraint.constant = -25
+                    self.dateTopConstraint.constant = 0
+                }
             }
         } else {
             self.connected = false
@@ -240,7 +262,8 @@ class ViewController: UIViewController {
     }
     
     func configButtons() {
-        self.reload.layer.cornerRadius = 29.5
-        self.another.layer.cornerRadius = 29.5
+        self.loadButton.layer.cornerRadius = 29.5
+        self.todayButton.layer.cornerRadius = 29.5
+        self.changeDate.layer.cornerRadius = 40
     }
 }
