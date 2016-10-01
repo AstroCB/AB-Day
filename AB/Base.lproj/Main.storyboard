@@ -119,34 +119,38 @@
                                     <constraint firstAttribute="trailing" secondItem="a2b-cF-c9H" secondAttribute="trailing" id="yfQ-va-jFj"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U5L-EA-5oe">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U5L-EA-5oe">
                                 <color key="backgroundColor" red="0.22297611832618713" green="0.52091151475906372" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="U5L-EA-5oe" secondAttribute="height" multiplier="1:1" id="BHz-fY-OFh"/>
                                     <constraint firstAttribute="width" constant="80" id="r4I-sh-4kk"/>
                                 </constraints>
-                                <state key="normal" title="Date">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
+                                <state key="normal" image="Calendar"/>
                                 <connections>
                                     <action selector="openCal" destination="vXZ-lx-hvc" eventType="touchUpInside" id="cVj-dN-3eu"/>
                                 </connections>
                             </button>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Dance" translatesAutoresizingMaskIntoConstraints="NO" id="7vL-Jj-r5f">
+                                <frame key="frameInset" minX="448" minY="653" width="375" height="667"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.039215686270000001" green="0.3411764706" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="U5L-EA-5oe" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="1fw-ep-1AC"/>
                             <constraint firstItem="d0f-Up-wsx" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="1x0-wN-Sf7"/>
                             <constraint firstItem="t7v-i3-Sf8" firstAttribute="height" secondItem="kh9-bI-dsS" secondAttribute="height" id="3rd-i3-wg0"/>
+                            <constraint firstItem="7vL-Jj-r5f" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="5fV-JJ-tTt"/>
                             <constraint firstItem="cUI-mW-5Fj" firstAttribute="top" secondItem="d0f-Up-wsx" secondAttribute="bottom" constant="8" symbolic="YES" id="CoM-6y-a5U"/>
                             <constraint firstItem="t7v-i3-Sf8" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="IkQ-Bh-pSy"/>
+                            <constraint firstItem="7vL-Jj-r5f" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="SOr-Qc-t4r"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="YRR-o2-6s8" secondAttribute="bottom" id="Ufe-vI-7Na"/>
                             <constraint firstAttribute="centerX" secondItem="cUI-mW-5Fj" secondAttribute="centerX" id="ZvP-yP-w7d"/>
                             <constraint firstAttribute="centerX" secondItem="ooc-tu-0tB" secondAttribute="centerX" id="cPi-ib-35G"/>
                             <constraint firstAttribute="centerY" secondItem="ooc-tu-0tB" secondAttribute="centerY" id="dav-ru-5TU"/>
                             <constraint firstItem="t7v-i3-Sf8" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="hai-y0-tEE"/>
+                            <constraint firstItem="7vL-Jj-r5f" firstAttribute="height" secondItem="kh9-bI-dsS" secondAttribute="height" id="hiB-XP-cNI"/>
                             <constraint firstAttribute="trailingMargin" secondItem="YRR-o2-6s8" secondAttribute="trailing" constant="-16" id="kRW-Kq-fYx"/>
+                            <constraint firstItem="7vL-Jj-r5f" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" id="krE-Lh-lns"/>
                             <constraint firstItem="t7v-i3-Sf8" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" id="lno-dY-qfC"/>
                             <constraint firstItem="d0f-Up-wsx" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="34" id="mfm-Oy-yHr"/>
                             <constraint firstItem="YRR-o2-6s8" firstAttribute="top" secondItem="ooc-tu-0tB" secondAttribute="bottom" id="nQ0-YL-vfR"/>
@@ -163,6 +167,7 @@
                         <outlet property="changeDate" destination="U5L-EA-5oe" id="bEj-Yw-XVR"/>
                         <outlet property="circleTopConstraint" destination="mfm-Oy-yHr" id="cP6-xM-Jj7"/>
                         <outlet property="circleView" destination="d0f-Up-wsx" id="V9J-hC-D34"/>
+                        <outlet property="danceView" destination="7vL-Jj-r5f" id="H6V-bL-N4Z"/>
                         <outlet property="dateString" destination="cUI-mW-5Fj" id="PVb-m1-wlV"/>
                         <outlet property="dateTopConstraint" destination="CoM-6y-a5U" id="Zzu-nl-OmK"/>
                         <outlet property="loadButton" destination="I7U-06-fdL" id="aWG-rn-Nta"/>
@@ -174,4 +179,8 @@
             <point key="canvasLocation" x="309.60000000000002" y="85.907046476761622"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Calendar" width="32" height="32"/>
+        <image name="Dance" width="1041" height="1272"/>
+    </resources>
 </document>

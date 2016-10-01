@@ -95,14 +95,21 @@ class ViewController: UIViewController {
     @IBOutlet var changeDate: UIButton!
     @IBOutlet var circleTopConstraint: NSLayoutConstraint!
     @IBOutlet var dateTopConstraint: NSLayoutConstraint!
+    @IBOutlet var danceView: UIImageView!
     
     var initial: Bool = true
     var request: Data?
     var connected: Bool = true
     var topConstant: CGFloat = 34
+    var clickCounter: Int = 0
     
     @IBAction func setToday() {
         self.calendar.setDate(Date(), animated: true)
+        
+        self.clickCounter += 1
+        if self.clickCounter == 7 {
+            self.showDance()
+        }
     }
     
     @IBAction func openCal() {
@@ -113,6 +120,8 @@ class ViewController: UIViewController {
         self.loadButton.isHidden = false
         self.todayButton.isHidden = false
         self.changeDate.isHidden = true
+        
+        self.clickCounter = 0
     }
     
     @IBAction func loadFromCal() {
@@ -159,25 +168,31 @@ class ViewController: UIViewController {
             }
             
             if let abDay: String = data.value(forKey: keyStr) as? String {
-                // Short code (PD/A/B/A*/B*)
                 if abDay == "PD" {
                     self.ab.font = UIFont.systemFont(ofSize: 25)
                     self.ab.numberOfLines = 2 // Add a line to fit the following
                     self.ab.text = "Professional Development Day\n(No School)"
                     self.circleView.backgroundColor = self.circleView.backgroundColor?.withAlphaComponent(0)
-                } else {
+                    if UIScreen.main.bounds.height <= 568 { // iPhone 5 screen size; hardcoded vals are a last resort
+                        self.ab.font = UIFont.systemFont(ofSize: 20)
+                        self.circleTopConstraint.constant = -80
+                        self.dateTopConstraint.constant = -80
+                    } else {
+                        self.circleTopConstraint.constant = -70
+                        self.dateTopConstraint.constant = -90
+                    }
+                } else { // Short code (A/B/A*/B*)
                     self.ab.font = UIFont.systemFont(ofSize: 132)
                     self.ab.numberOfLines = 1
                     self.ab.text = abDay
                     self.circleView.backgroundColor = self.circleView.backgroundColor?.withAlphaComponent(1)
-                }
-                
-                if UIScreen.main.bounds.height <= 568 { // iPhone 5 screen size; hardcoded vals are a last resort
-                    self.circleTopConstraint.constant = 0
-                    self.dateTopConstraint.constant = 15
-                } else {
-                    self.circleTopConstraint.constant = self.topConstant
-                    self.dateTopConstraint.constant = 25
+                    if UIScreen.main.bounds.height <= 568 { // iPhone 5 screen size; hardcoded vals are a last resort
+                        self.circleTopConstraint.constant = 0
+                        self.dateTopConstraint.constant = 15
+                    } else {
+                        self.circleTopConstraint.constant = self.topConstant
+                        self.dateTopConstraint.constant = 25
+                    }
                 }
             } else {
                 self.ab.font = UIFont.systemFont(ofSize: 50)
@@ -265,5 +280,12 @@ class ViewController: UIViewController {
         self.loadButton.layer.cornerRadius = 29.5
         self.todayButton.layer.cornerRadius = 29.5
         self.changeDate.layer.cornerRadius = 40
+    }
+    
+    func showDance() {
+        self.danceView.isHidden = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.danceView.isHidden = true
+        }
     }
 }
