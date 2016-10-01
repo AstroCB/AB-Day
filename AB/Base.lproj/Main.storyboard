@@ -45,8 +45,7 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <visualEffectView hidden="YES" opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="t7v-i3-Sf8">
-                                <frame key="frameInset" minX="363" minY="653" width="375" height="667"/>
+                            <visualEffectView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t7v-i3-Sf8">
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="IgM-JB-ZQ6">
                                     <frame key="frameInset"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -130,9 +129,7 @@
                                     <action selector="openCal" destination="vXZ-lx-hvc" eventType="touchUpInside" id="cVj-dN-3eu"/>
                                 </connections>
                             </button>
-                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Dance" translatesAutoresizingMaskIntoConstraints="NO" id="7vL-Jj-r5f">
-                                <frame key="frameInset" minX="448" minY="653" width="375" height="667"/>
-                            </imageView>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Dance" translatesAutoresizingMaskIntoConstraints="NO" id="7vL-Jj-r5f"/>
                         </subviews>
                         <color key="backgroundColor" red="0.039215686270000001" green="0.3411764706" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
