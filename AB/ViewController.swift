@@ -71,9 +71,6 @@ class ViewController: UIViewController {
         } else {
             self.dateString.font = UIFont.systemFont(ofSize: 30.00)
         }
-        
-        // Initialize & keep track of top constant, which will be modified for layout purposes later
-        self.topConstant = self.circleTopConstraint.constant
     }
     
     override func didReceiveMemoryWarning() {
@@ -93,7 +90,6 @@ class ViewController: UIViewController {
     @IBOutlet var blurView: UIVisualEffectView!
     @IBOutlet var circleView: UIView!
     @IBOutlet var changeDate: UIButton!
-    @IBOutlet var circleTopConstraint: NSLayoutConstraint!
     @IBOutlet var dateTopConstraint: NSLayoutConstraint!
     @IBOutlet var danceView: UIImageView!
     
@@ -120,6 +116,9 @@ class ViewController: UIViewController {
         self.loadButton.isHidden = false
         self.todayButton.isHidden = false
         self.changeDate.isHidden = true
+        
+        UIApplication.shared.setStatusBarStyle(.default, animated: true)
+        self.setNeedsStatusBarAppearanceUpdate()
         
         self.clickCounter = 0
     }
@@ -149,6 +148,9 @@ class ViewController: UIViewController {
         self.todayButton.isHidden = true
         self.changeDate.isHidden = false
         
+        UIApplication.shared.setStatusBarStyle(.lightContent, animated: true)
+        self.setNeedsStatusBarAppearanceUpdate()
+        
         // Make date readable; display it
         let dateFormatter: DateFormatter = DateFormatter()
         dateFormatter.dateStyle = .full
@@ -175,22 +177,19 @@ class ViewController: UIViewController {
                     self.circleView.backgroundColor = self.circleView.backgroundColor?.withAlphaComponent(0)
                     if UIScreen.main.bounds.height <= 568 { // iPhone 5 screen size; hardcoded vals are a last resort
                         self.ab.font = UIFont.systemFont(ofSize: 20)
-                        self.circleTopConstraint.constant = -80
-                        self.dateTopConstraint.constant = -80
+                        self.dateTopConstraint.constant = -75
                     } else {
-                        self.circleTopConstraint.constant = -70
-                        self.dateTopConstraint.constant = -90
+                        self.dateTopConstraint.constant = -30
                     }
                 } else { // Short code (A/B/A*/B*)
                     self.ab.font = UIFont.systemFont(ofSize: 132)
                     self.ab.numberOfLines = 1
                     self.ab.text = abDay
                     self.circleView.backgroundColor = self.circleView.backgroundColor?.withAlphaComponent(1)
+                    
                     if UIScreen.main.bounds.height <= 568 { // iPhone 5 screen size; hardcoded vals are a last resort
-                        self.circleTopConstraint.constant = 0
-                        self.dateTopConstraint.constant = 15
+                        self.dateTopConstraint.constant = 10
                     } else {
-                        self.circleTopConstraint.constant = self.topConstant
                         self.dateTopConstraint.constant = 25
                     }
                 }
@@ -200,10 +199,8 @@ class ViewController: UIViewController {
                 self.circleView.backgroundColor = self.circleView.backgroundColor?.withAlphaComponent(0)
                 
                 if UIScreen.main.bounds.height <= 568 { // iPhone 5 screen size; hardcoded vals are a last resort
-                    self.circleTopConstraint.constant = -45
                     self.dateTopConstraint.constant = -25
                 } else {
-                    self.circleTopConstraint.constant = -25
                     self.dateTopConstraint.constant = 0
                 }
             }
