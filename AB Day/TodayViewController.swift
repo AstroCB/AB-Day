@@ -29,7 +29,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     }
     
     func getData() -> String? {
-        let data: Data? = try? Data(contentsOf: URL(string: "https://dl.dropboxusercontent.com/u/56017856/dates.json")!)
+        let data: Data? = try? Data(contentsOf: URL(string: "https://cameronbernhardt.com/projects/ab-day/dates.json")!)
         
         if let req = data {
             var parsedData: NSDictionary?
