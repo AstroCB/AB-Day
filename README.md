@@ -1,5 +1,5 @@
 # A/B Day for Baltimore County Public Schools
-A/B Day is an [iOS and watchOS application](https://itunes.apple.com/us/app/b-day-for-baltimore-county/id928756760) [and website](https://cameronbernhardt.com/projects/ab-day/) designed to help students, parents, and teachers keep track of the A/B block schedule for Baltimore County Public Schools. It allows you to input any day in the future or past (as far back as the A/B system has existed) and find out whether it was or will be an A or B day.
+A/B Day is an [iOS and watchOS application](https://itunes.apple.com/us/app/b-day-for-baltimore-county/id928756760) and [website](https://cameronbernhardt.com/projects/ab-day/) designed to help students, parents, and teachers keep track of the A/B block schedule for Baltimore County Public Schools. It allows you to input any day in the future or past (as far back as the A/B system has existed) and find out whether it was or will be an A or B day.
 
 You can also receive notifications each morning informing you of what type of day that day will be; it will also inform you of delays or closings if applicable.
 
