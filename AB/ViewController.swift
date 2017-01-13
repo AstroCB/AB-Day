@@ -286,3 +286,25 @@ class ViewController: UIViewController {
         }
     }
 }
+
+/**
+ Presents a UIAlert using a UIAlertViewController (iOS 8+).
+ See past projects for a version of this function that is compatible with iOS 7 (UIAlertView).
+ 
+ - Parameters:
+ - title: Title of the alert.
+ - withMessage: Message body of the alert.
+ - toView: View on which to present the alert.
+ */
+
+public func alert(title: String, withMessage message: String, toView sender: UIViewController) {
+    if let _: AnyClass = NSClassFromString("UIAlertController") {
+        let alert: UIAlertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let action: UIAlertAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(action)
+        
+        sender.present(alert, animated: true, completion: nil)
+    }
+}
+
+

@@ -7,10 +7,10 @@
 //
 
 import UIKit
-import Parse
+import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     
     var window: UIWindow?
     
@@ -21,10 +21,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             application.isStatusBarHidden = true
         }
         
-        Parse.setApplicationId("WGmtjlRAoyLDAnsFkyAhM5YvuCA2cqeklcyBtwcz", clientKey: "I0iTjxmaBUQuRnOfu459KTxrGRQT0SDwB13MYG9a")
-        
         // Register for Push Notifications
-        if #available(iOS 8.0, *) {
+        if #available(iOS 10.0, *) {
+            let center: UNUserNotificationCenter = UNUserNotificationCenter.current()
+            center.requestAuthorization(options: [.badge, .alert], completionHandler: { (granted: Bool, err: Error?) in
+                if granted {
+                    print("Successful push authorization")
+                } else {
+                    print("Push authorization denied")
+                }
+                
+                if let error: Error = err {
+                    print("Error: \(error)")
+                }
+            })
+            application.registerForRemoteNotifications()
+        } else if #available(iOS 8.0, *) {
             let notificationTypes: UIUserNotificationType = ([.alert, .badge, .sound])
             let notificationSettings: UIUserNotificationSettings = UIUserNotificationSettings(types: notificationTypes, categories: nil)
             application.registerUserNotificationSettings(notificationSettings)
@@ -33,25 +45,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             application.registerForRemoteNotifications(matching: [.alert, .badge, .sound])
         }
         return true
-    }
-    
-    @available(iOS 8.0, *)
-    func application(_ application: UIApplication, didRegister notificationSettings: UIUserNotificationSettings) {
-        application.registerForRemoteNotifications()
-    }
-    
-    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        let currentInstallation: PFInstallation = PFInstallation.current()
-        currentInstallation.setDeviceTokenFrom(deviceToken)
-        currentInstallation.saveInBackground()
-    }
-    
-    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        // Registration failed (probably because you can't use push in Simulator)
-        print(error.localizedDescription, terminator: "")
-    }
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
-        PFPush.handle(userInfo)
     }
     
     @available(iOS 9.0, *)
@@ -64,6 +57,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     (self.window?.rootViewController as! ViewController).getNext(shortcutItem.type)
                 }
             }
+        }
+    }
+    // MARK: - Push notifications
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        let deviceTokenString: String = deviceToken.reduce("", {$0 + String(format: "%02X", $1)})
+        self.sendTokenToServer(token: deviceTokenString)
+    }
+    
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("Registration failed (likely due to Simulator): \(error)")
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        if let aps: [String: String] = userInfo[AnyHashable("aps")] as? [String: String], let body: String = aps["alert"], let win: UIWindow = self.window, let controller: UIViewController = win.rootViewController {
+            alert(title: "Alert", withMessage: body, toView: controller)
+        } else {
+            print("Error alerting user while in-app")
+            print(userInfo)
         }
     }
     
@@ -89,6 +101,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
-    
+    func sendTokenToServer(token: String) {
+        var request: URLRequest = URLRequest(url: URL(string: "https://astrocb-push.herokuapp.com/newtoken")!)
+        request.httpMethod = "POST"
+        let bundleId: String = Bundle.main.bundleIdentifier! // Should never be null
+        let postString: String = "token=\(token)&bundleId=\(bundleId)"
+        request.httpBody = postString.data(using: .utf8)
+        let task: URLSessionDataTask = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else { // Check for fundamental networking error
+                print("Error: \(error)")
+                return
+            }
+            
+            if let httpStatus: HTTPURLResponse = response as? HTTPURLResponse, httpStatus.statusCode != 200 { // Check for HTTP errors
+                print("statusCode should be 200, but is \(httpStatus.statusCode)")
+                print("Response: \(response)")
+            }
+            
+            let responseString: String? = String(data: data, encoding: .utf8)
+            print("responseString: \(responseString)")
+        }
+        task.resume()
+    }
 }
 
