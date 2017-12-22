@@ -115,7 +115,7 @@ class InterfaceController: WKInterfaceController {
     
     func setLabelText(_ text: String, withSize size: CGFloat) {
         let font: UIFont = UIFont.systemFont(ofSize: size)
-        let attrString: NSAttributedString = NSAttributedString(string: text, attributes: [NSFontAttributeName: font])
+        let attrString: NSAttributedString = NSAttributedString(string: text, attributes: [NSAttributedStringKey.font: font])
         self.day.setAttributedText(attrString)
     }
     
