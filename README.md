@@ -3,4 +3,6 @@ A/B Day is an [iOS and watchOS application](https://itunes.apple.com/us/app/b-da
 
 You can also receive notifications each morning informing you of what type of day that day will be; it will also inform you of delays or closings if applicable.
 
-Notifications are sent from a server written in Python that maintains a constantly-updated copy of the A/B schedule, and the server pulls from BCPS's website each morning to check for closings and delays. In the event of a closing or delay, the app will automatically send a notification and update the stored schedule to reflect these changes, which can be viewed from the app.
+Notifications are sent from [a server](Push/Push.py) written in Python that maintains a constantly-updated copy of the A/B schedule, and the server pulls from BCPS's website each morning to check for closings and delays. In the event of a closing or delay, the app will automatically send a notification and update the stored schedule to reflect these changes, which can be viewed from the app.
+
+Lastly, there is [a common endpoint](https://cameronbernhardt.com/projects/ab-day/dates.json) used for all of these clients that can be queried for the latest date information if you'd like to make something yourself that uses this data.
