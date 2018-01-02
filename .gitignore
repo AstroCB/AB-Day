@@ -1,3 +1,5 @@
 ParseData/
 parse-library/
 .vscode
+Push/credentials.py
+Push/__pycache__

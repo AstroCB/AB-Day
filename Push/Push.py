@@ -2,8 +2,10 @@
 Push.py
 Cameron Bernhardt
 
-This file consists of the code used to deal with both push notifications and
-snow day updates to the A/B database.
+This file consists of the code used to send daily push and Twitter
+notifications. It also monitors the BCPS status page for snow day/delays and
+updates the A/B database with this information while including it in the
+notifications that are sent out to iOS devices and Twitter.
 """
 
 # Dependencies
@@ -13,8 +15,10 @@ from urllib.request import Request, urlopen
 import ssl
 import json
 import re
-import git
-from bs4 import BeautifulSoup
+import git # Used to update the dates API locally & push to remote
+from bs4 import BeautifulSoup # For scraping/parsing the BCPS status page
+import twitter # Twitter API wrapper
+import credentials # Internal module used for storing Twitter API credentials
 
 # Used to ensure SSL standard for requests (and to allow access to the dates
 # file over HTTPS)
@@ -76,6 +80,22 @@ def send_push(body, title):
     request = Request(url, urlencode(fields).encode())
     return urlopen(request, context=CONTEXT).read().decode()
 
+def send_tweet(msg):
+    """
+    Tweets the current status from the @abdaybot Twitter account.
+
+    Account credentials used by the twitter module are pulled from a
+    gitignored credentials.py file.
+    """
+
+    # Construct the API object to log in
+    api = twitter.Api(consumer_key=credentials.consumer_key,
+                      consumer_secret=credentials.consumer_secret,
+                      access_token_key=credentials.access_key,
+                      access_token_secret=credentials.access_secret)
+
+    api.PostUpdate(msg)
+
 def main():
     """
     This will run every morning on weekdays (via cron).
@@ -85,9 +105,11 @@ def main():
     status page for any county-wide closings.
 
     If such a closing is found, the dates API will be updated to reflect the
-    closing, and any users with notifications on will be notified.
+    closing, and any users with push notifications on will be notified and the
+    Twitter bot will tweet the same message.
 
-    Otherwise, a normal notification will be sent with the current type of day.
+    Otherwise, a normal notification and tweet will be sent with the
+    current type of day (A/B).
     """
     DATE_API = "https://cameronbernhardt.com/projects/ab-day/dates.json"
     BCPS_STATUS_PAGE = "http://www.bcps.org/status/"
@@ -153,7 +175,8 @@ def main():
             title_string = "Schools Closed"
             update_dates(day_str, day_type) # Update dates.json with the news
 
-    print(send_push(push_string, title_string)) # Returns POST response
+    send_tweet(push_string)
+    send_push(push_string, title_string)
 
 if __name__ == "__main__":
     main()
