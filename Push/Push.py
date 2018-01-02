@@ -1,96 +1,159 @@
+"""
+Push.py
+Cameron Bernhardt
+
+This file consists of the code used to deal with both push notifications and
+snow day updates to the A/B database.
+"""
+
 # Dependencies
 from datetime import date
-import json, re, git
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
-from bs4 import BeautifulSoup
 import ssl
+import json
+import re
+import git
+from bs4 import BeautifulSoup
 
-context = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
+# Used to ensure SSL standard for requests (and to allow access to the dates
+# file over HTTPS)
+CONTEXT = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
 
 # Utility functions
-def getContents(url):
+def get_contents(url):
+    """
+    Grabs the contents of the passed URL and returns a urlopen instance.
+    """
     req = Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-    return urlopen(req, context=context).read().decode("utf-8")
+    return urlopen(req, context=CONTEXT).read().decode("utf-8")
 
-def updateDates():
+def update_dates(day_str, day_type):
+    """
+    Accesses the local git repo containing the list of AB dates and updates
+    it with the new information when a snow day is detected via the daily BCPS
+    site poll.
+
+    Requires a local clone of the repo containing this information (aka my root
+    site repository, as this is where the global copy of dates is stored that
+    everything pulls from).
+
+    This is done via the handy git module that is included at the top of this
+    file, and the updates are done to my site repo in my own name (so the app
+    and all of the other clients will receive the new info on the next pull).
+    """
     git_direc = "/Users/cameronbernhardt/Desktop/astrocb.github.io/"
     path = git_direc + "projects/ab-day/dates.json"
     repo = git.Repo(git_direc)
-    repo.git.pull() # Update directory from remote
-    with open(path, "r+") as file:
+    repo.git.pull() # Update directory from remote to pull latest date info
+    with open(path, "r+") as dates_file:
         # Search & replace with the new "Snow" day
-        match_str = "\"" + day_str + "\":\"" + AB_response[day_str] + "\""
+        match_str = "\"" + day_str + "\":\"" + day_type + "\""
         repl_str = "\"" + day_str + "\":\"Snow\""
-        new_data = re.sub(match_str, repl_str, file.read())
+        new_data = re.sub(match_str, repl_str, dates_file.read())
         # Wipe old file
-        file.truncate()
-    with open(path, "w") as file:
+        dates_file.truncate()
+    with open(path, "w") as dates_file:
         # Write new data to the file
-        file.write(new_data)
+        dates_file.write(new_data)
+    # Commit changes as myself and push to remote to update globally
     repo.git.add([path])
-    me = git.Actor("Cameron Bernhardt", "cambernhardt@me.com");
+    me = git.Actor("Cameron Bernhardt", "cambernhardt@me.com")
     repo.git.commit(m="Update dates.json", author=me)
     repo.git.push()
 
-# Send notification via POST to Heroku server
-def sendPush(body, title):
+def send_push(body, title):
+    """
+    Sends a notification via POST to my custom push-handling Heroku server
+    that is shared by all of my iOS apps.
+
+    For the purposes of this app, the only important thing is that this server
+    accepts POST requests containing the app's identifier and a body/title to
+    be displayed in the notification.
+    """
     url = "https://astrocb-push.herokuapp.com/newpush"
     fields = {"appIdentifier": "com.cameronbernhardt.AB", "body": body, "title": title}
     request = Request(url, urlencode(fields).encode())
-    return urlopen(request, context=context).read().decode()
+    return urlopen(request, context=CONTEXT).read().decode()
 
-# Dates API
-AB_response = json.loads(getContents("https://cameronbernhardt.com/projects/ab-day/dates.json"))
+def main():
+    """
+    This will run every morning on weekdays (via cron).
 
-# BCPS page
-BCPS_response = getContents("http://www.bcps.org/status/")
-cleaned_resp = BeautifulSoup(BCPS_response, "html.parser")
+    It loads the dates API from my site (that is shared between all clients
+    for this application) and also checks the Baltimore County Public Schools
+    status page for any county-wide closings.
 
-# Figure out what today is and format it to check
-today = str(date.today()).split("-")
+    If such a closing is found, the dates API will be updated to reflect the
+    closing, and any users with notifications on will be notified.
 
-# Deal with weird formatting of dates API (padded dates)
-if today[2][0] == "0":
-    today[2] = today[2][1]
-if today[1][0] == "0":
-    today[1] = today[1][1]
+    Otherwise, a normal notification will be sent with the current type of day.
+    """
+    DATE_API = "https://cameronbernhardt.com/projects/ab-day/dates.json"
+    BCPS_STATUS_PAGE = "http://www.bcps.org/status/"
 
-day_str = today[1] + today[2] + today[0]
+    # Load the remote dates file from the site
+    ab_response = json.loads(get_contents(DATE_API))
 
-push_string = "" # What will be sent
-title_string = None # Optional new title field for pushes
+    # BCPS page
+    bcps_response = get_contents(BCPS_STATUS_PAGE)
+    cleaned_resp = BeautifulSoup(bcps_response, "html.parser")
 
-# AB parsing and collection
-if AB_response.get(day_str) != None:
-    push_string = "Today is a"
-    day_type = AB_response[day_str]
+    # Figure out what today is and format it to check
+    today = str(date.today()).split("-")
 
-    if day_type == "A":
-        push_string += "n"
+    # Deal with weird formatting of dates API (padded dates)
+    if today[2][0] == "0":
+        today[2] = today[2][1]
+    if today[1][0] == "0":
+        today[1] = today[1][1]
 
-    push_string += " " + day_type + " day."
-    title_string = day_type + " Day"
+    day_str = today[1] + today[2] + today[0]
 
-# BCPS parsing and collection
-raw_status = cleaned_resp.find(style="font-size:12pt;color:#cc0000;")
-status = None
-if raw_status != None:
-    for line in raw_status:
-        status = line
+    push_string = "" # What will be sent
+    title_string = None # Optional new title field for pushes
 
-if status != None and status != "":
-    match = re.search(r'All schools opening (\S*) hours late\.', status)
-    if match != None:
-        if match.group(1):
-            push_string += " Schools will be opening " + match.group(1) + " hours late." # n hour Delay
-    match = re.search(r'All schools opening one hour late\.', status)
-    if match != None:
-        push_string += " Schools will be opening one hour late." # One hour delay
-    match = re.search(r'All schools(?: and offices)?\s(?:are\s|will\s(?:once\sagain\s)?be\s)?closed', status, re.I)
-    if match != None:
-        push_string = "All schools are closed today."
-        title_string = "Schools Closed"
-        updateDates() # Update dates.json with the news
+    # AB parsing and collection
+    if ab_response.get(day_str) != None: # Query API response for day type
+        push_string = "Today is a"
+        day_type = ab_response[day_str]
 
-print(sendPush(push_string, title_string)) # Returns POST response
+        if day_type == "A": # Grammar check
+            push_string += "n"
+
+        push_string += " " + day_type + " day."
+        title_string = day_type + " Day"
+
+    # BCPS parsing and collection
+    # This is a raw scrape that is heavily dependent on the current formatting
+    # of the BCPS status page and the language typically used to indicate
+    # delays and closings. If either of these change, this will break, but it is
+    # designed to break in a harmless way that will lead to nothing more than
+    # users being notified of the current type of day despite a possible
+    # closing or delay that may have gone undetected.
+    raw_status = cleaned_resp.find(style="font-size:12pt;color:#cc0000;")
+    status = None
+    if raw_status != None:
+        for line in raw_status:
+            status = line
+
+    if status != None and status != "":
+        match = re.search(r'All schools opening (\S*) hours late\.', status)
+        if match != None:
+            if match.group(1):
+                push_string += " Schools will be opening " + match.group(1) + " hours late." # n hour Delay
+                title_string = "Schools Delayed"
+        match = re.search(r'All schools opening one hour late\.', status)
+        if match != None:
+            push_string += " Schools will be opening one hour late." # One hour delay
+            title_string = "Schools Delayed"
+        match = re.search(r'All schools(?: and offices)?\s(?:are\s|will\s(?:once\sagain\s)?be\s)?closed', status, re.I)
+        if match != None:
+            push_string = "All schools are closed today."
+            title_string = "Schools Closed"
+            update_dates(day_str, day_type) # Update dates.json with the news
+
+    print(send_push(push_string, title_string)) # Returns POST response
+
+if __name__ == "__main__":
+    main()
