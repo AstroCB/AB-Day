@@ -46,7 +46,7 @@ def update_dates(day_str, day_type):
     file, and the updates are done to my site repo in my own name (so the app
     and all of the other clients will receive the new info on the next pull).
     """
-    git_direc = "/Users/cameronbernhardt/Desktop/astrocb.github.io/"
+    git_direc = "/astrocb.github.io/"
     path = git_direc + "projects/ab-day/dates.json"
     repo = git.Repo(git_direc)
     repo.git.pull() # Update directory from remote to pull latest date info

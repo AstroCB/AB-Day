@@ -3,3 +3,4 @@ parse-library/
 .vscode
 Push/credentials.py
 Push/__pycache__
+Push/AB-Day.pem
