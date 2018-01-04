@@ -76,7 +76,7 @@ def send_push(body, title):
     be displayed in the notification.
     """
     url = "https://astrocb-push.herokuapp.com/newpush"
-    fields = {"appIdentifier": "com.cameronbernhardt.AB", "body": body, "title": title}
+    fields = {"bundleId": "com.cameronbernhardt.AB", "body": body, "title": title}
     request = Request(url, urlencode(fields).encode())
     return urlopen(request, context=CONTEXT).read().decode()
 
