@@ -46,7 +46,7 @@ def update_dates(day_str, day_type):
     file, and the updates are done to my site repo in my own name (so the app
     and all of the other clients will receive the new info on the next pull).
     """
-    git_direc = "/home/ec2-user/astrocb.github.io/"
+    git_direc = "/home/cameron/astrocb.github.io/"
     path = git_direc + "projects/ab-day/dates.json"
     repo = git.Repo(git_direc)
     repo.git.pull() # Update directory from remote to pull latest date info
@@ -175,8 +175,9 @@ def main():
             title_string = "Schools Closed"
             update_dates(day_str, day_type) # Update dates.json with the news
 
-    send_tweet(push_string)
-    send_push(push_string, title_string)
+    #send_tweet(push_string)
+    #send_push(push_string, title_string)
+    print(push_string)
 
 if __name__ == "__main__":
     main()
