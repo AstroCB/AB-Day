@@ -56,7 +56,7 @@ class InterfaceController: WKInterfaceController {
     public func initConfig() {
         self.setLabelText("-", withSize: 100) // Initialize label
         
-        let json: JSON = JSON(url: "https://cameronbernhardt.com/projects/ab-day/dates.json")
+        let json: JSON = JSON(url: "https://cameronbernhardt.com/projects/ab-day/newdates.json")
         data = json.load()
         if let abDay: String = getDay(forDate: Date()) {
             print(abDay)
@@ -123,10 +123,9 @@ class InterfaceController: WKInterfaceController {
         if let jData: Data = self.data {
             let newData: NSDictionary = JSON.parse(jData)
             let dateFormatter = DateFormatter()
-            dateFormatter.dateStyle = .short
-            let keyArr: [String] = dateFormatter.string(from: date).components(separatedBy: "/")
+            dateFormatter.dateFormat = "MMddyyyy"
+            let keyStr: String = dateFormatter.string(from: date)
             
-            let keyStr: String = "\(keyArr[0] + keyArr[1])20\(keyArr[2])"
             return newData.value(forKey: keyStr) as? String
             
         }
