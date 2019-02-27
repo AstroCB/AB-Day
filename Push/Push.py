@@ -22,7 +22,7 @@ import credentials # Internal module used for storing Twitter API credentials
 
 # Used to ensure SSL standard for requests (and to allow access to the dates
 # file over HTTPS)
-CONTEXT = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
+CONTEXT = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
 
 # Utility functions
 def get_contents(url):
@@ -175,9 +175,8 @@ def main():
             title_string = "Schools Closed"
             update_dates(day_str, day_type) # Update dates.json with the news
 
-    #send_tweet(push_string)
-    #send_push(push_string, title_string)
-    print(push_string)
+    send_tweet(push_string)
+    send_push(push_string, title_string)
 
 if __name__ == "__main__":
     main()
