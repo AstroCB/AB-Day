@@ -146,6 +146,7 @@
     {
       "orientation" : "portrait",
       "idiom" : "ipad",
+      "filename" : "97inp 2a-1.png",
       "extent" : "full-screen",
       "scale" : "2x"
     },
@@ -158,6 +159,7 @@
     {
       "orientation" : "landscape",
       "idiom" : "ipad",
+      "filename" : "97inl 2-1.png",
       "extent" : "full-screen",
       "scale" : "2x"
     }

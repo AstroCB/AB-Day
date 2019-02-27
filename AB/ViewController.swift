@@ -135,7 +135,7 @@ class ViewController: UIViewController {
     }
     
     func getData() -> Data? {
-        let json: JSON = JSON(url: "https://cameronbernhardt.com/projects/ab-day/dates.json")
+        let json: JSON = JSON(url: "https://cameronbernhardt.com/projects/ab-day/newdates.json")
         return json.load()
     }
     
@@ -161,9 +161,8 @@ class ViewController: UIViewController {
         if let req = self.request {
             let data = JSON.parse(req)
             
-            dateFormatter.dateStyle = .short
-            let keyArr: [String] = dateFormatter.string(from: date).components(separatedBy: "/")
-            let keyStr: String = "\(keyArr[0] + keyArr[1])20\(keyArr[2])"
+            dateFormatter.dateFormat = "MMddyyyy"
+            let keyStr: String = dateFormatter.string(from: date)
             
             if let maxDate: String = data.value(forKey: "maxDate") as? String {
                 self.calendar.maximumDate = dateFormatter.date(from: maxDate)

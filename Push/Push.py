@@ -175,8 +175,9 @@ def main():
             title_string = "Schools Closed"
             update_dates(day_str, day_type) # Update dates.json with the news
 
-    send_tweet(push_string)
-    send_push(push_string, title_string)
+    #send_tweet(push_string)
+    #send_push(push_string, title_string)
+    print(push_string)
 
 if __name__ == "__main__":
     main()
