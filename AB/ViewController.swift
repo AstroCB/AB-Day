@@ -55,6 +55,7 @@ class ViewController: UIViewController {
         
         self.load(Date())
         
+        self.initDanceView()
         self.calendar.isHidden = true
         self.ab.isHidden = false
         self.todayButton.isHidden = true
@@ -91,12 +92,11 @@ class ViewController: UIViewController {
     @IBOutlet var circleView: UIView!
     @IBOutlet var changeDate: UIButton!
     @IBOutlet var dateTopConstraint: NSLayoutConstraint!
-    @IBOutlet var danceView: UIImageView!
     
     var initial: Bool = true
     var request: Data?
     var connected: Bool = true
-    var topConstant: CGFloat = 34
+    var danceView: UIImageView!
     var clickCounter: Int = 0
     
     @IBAction func setToday() {
@@ -276,6 +276,22 @@ class ViewController: UIViewController {
         self.loadButton.layer.cornerRadius = 29.5
         self.todayButton.layer.cornerRadius = 29.5
         self.changeDate.layer.cornerRadius = 40
+    }
+    
+    func initDanceView() {
+        self.danceView = UIImageView(frame: UIScreen.main.bounds)
+        self.danceView.image = UIImage(named: "Dance")
+        self.danceView.contentMode = .scaleAspectFill
+        self.danceView.translatesAutoresizingMaskIntoConstraints = false
+        self.danceView.isHidden = true
+        self.view.addSubview(self.danceView)
+        
+        let leadingConstraint = NSLayoutConstraint(item: self.danceView!, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1.0, constant: 0.0)
+        let trailingConstraint = NSLayoutConstraint(item: self.danceView!, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1.0, constant: 0.0)
+        let topConstraint = NSLayoutConstraint(item: self.danceView!, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: 0.0)
+        let bottomConstraint = NSLayoutConstraint(item: self.danceView!, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1.0, constant: 0.0)
+
+        NSLayoutConstraint.activate([leadingConstraint, trailingConstraint, topConstraint, bottomConstraint])
     }
     
     func showDance() {

@@ -30,6 +30,7 @@
 		9DA7F27D1A3DECF800D30FA0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DA7F27C1A3DECF800D30FA0 /* SystemConfiguration.framework */; };
 		9DA7F27F1A3DED0200D30FA0 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DA7F27E1A3DED0200D30FA0 /* libz.dylib */; };
 		9DA7F2811A3DED0C00D30FA0 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DA7F2801A3DED0C00D30FA0 /* libsqlite3.dylib */; };
+		9DD354E12385F89100CA0984 /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9DD354E02385F89100CA0984 /* Launch.storyboard */; };
 		9DEBBC181ACF8F7A0014C3BF /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DEBBC171ACF8F7A0014C3BF /* InterfaceController.swift */; };
 		9DEBBC1A1ACF8F7A0014C3BF /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DEBBC191ACF8F7A0014C3BF /* NotificationController.swift */; };
 		9DEBBC1C1ACF8F7A0014C3BF /* GlanceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DEBBC1B1ACF8F7A0014C3BF /* GlanceController.swift */; };
@@ -139,6 +140,7 @@
 		9DA7F27E1A3DED0200D30FA0 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		9DA7F2801A3DED0C00D30FA0 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		9DB06BA51A27850D0098E4AC /* AB.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = AB.entitlements; sourceTree = "<group>"; };
+		9DD354E02385F89100CA0984 /* Launch.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Launch.storyboard; sourceTree = "<group>"; };
 		9DEBBC121ACF8F7A0014C3BF /* AB WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "AB WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DEBBC151ACF8F7A0014C3BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9DEBBC161ACF8F7A0014C3BF /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 				9D01981419C5FB5500D7543D /* AppDelegate.swift */,
 				9D01981619C5FB5500D7543D /* ViewController.swift */,
 				9D01981819C5FB5500D7543D /* Main.storyboard */,
+				9DD354E02385F89100CA0984 /* Launch.storyboard */,
 				9D01981219C5FB5500D7543D /* Supporting Files */,
 			);
 			path = AB;
@@ -456,7 +459,7 @@
 					9D01980E19C5FB5500D7543D = {
 						CreatedOnToolsVersion = 6.0;
 						DevelopmentTeam = VFK9RBFX9F;
-						LastSwiftMigration = 0920;
+						LastSwiftMigration = 1030;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 0;
@@ -474,18 +477,18 @@
 					};
 					9D01982319C5FB5600D7543D = {
 						CreatedOnToolsVersion = 6.0;
-						LastSwiftMigration = 0920;
+						LastSwiftMigration = 1030;
 						TestTargetID = 9D01980E19C5FB5500D7543D;
 					};
 					9D40BBF31A2D5EFD00ADF0BF = {
 						CreatedOnToolsVersion = 6.1;
 						DevelopmentTeam = VFK9RBFX9F;
-						LastSwiftMigration = 0920;
+						LastSwiftMigration = 1030;
 					};
 					9DEBBC111ACF8F7A0014C3BF = {
 						CreatedOnToolsVersion = 6.2;
 						DevelopmentTeam = VFK9RBFX9F;
-						LastSwiftMigration = 0920;
+						LastSwiftMigration = 1030;
 					};
 					9DEBBC201ACF8F7A0014C3BF = {
 						CreatedOnToolsVersion = 6.2;
@@ -496,7 +499,7 @@
 			};
 			buildConfigurationList = 9D01980A19C5FB5500D7543D /* Build configuration list for PBXProject "AB" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -536,6 +539,7 @@
 			files = (
 				9DA3318F19E897FE007C9EBF /* Images.xcassets in Resources */,
 				9D01981A19C5FB5500D7543D /* Main.storyboard in Resources */,
+				9DD354E12385F89100CA0984 /* Launch.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -769,17 +773,18 @@
 				CODE_SIGN_ENTITLEMENTS = AB/AB.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = VFK9RBFX9F;
 				INFOPLIST_FILE = AB/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 3.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cameronbernhardt.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -795,16 +800,17 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = VFK9RBFX9F;
 				INFOPLIST_FILE = AB/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 3.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cameronbernhardt.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -822,8 +828,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cameronbernhardt.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AB.app/AB";
 			};
 			name = Debug;
@@ -837,8 +842,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cameronbernhardt.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AB.app/AB";
 			};
 			name = Release;
@@ -848,6 +852,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -855,11 +860,11 @@
 				INFOPLIST_FILE = "AB Day/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MARKETING_VERSION = 3.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cameronbernhardt.AB.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -868,14 +873,15 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = "AB Day/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MARKETING_VERSION = 3.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cameronbernhardt.AB.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -884,6 +890,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -891,12 +898,12 @@
 				INFOPLIST_FILE = "AB WatchKit Extension/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MARKETING_VERSION = 3.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cameronbernhardt.AB.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
@@ -908,15 +915,16 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = "AB WatchKit Extension/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MARKETING_VERSION = 3.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cameronbernhardt.AB.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
@@ -928,12 +936,14 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				IBSC_MODULE = AB_WatchKit_Extension;
 				INFOPLIST_FILE = "AB WatchKit App/Info.plist";
+				MARKETING_VERSION = 3.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cameronbernhardt.AB.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -951,8 +961,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
 				IBSC_MODULE = AB_WatchKit_Extension;
 				INFOPLIST_FILE = "AB WatchKit App/Info.plist";
+				MARKETING_VERSION = 3.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cameronbernhardt.AB.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
