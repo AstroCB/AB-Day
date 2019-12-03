@@ -98,7 +98,7 @@ class ViewController: UIViewController {
         // Set font sizes to fit screens properly
         if UIScreen.main.bounds.width < 375 {
             self.dateString.font = UIFont.systemFont(ofSize: 20.00)
-        } else if UIScreen.main.bounds.width == 375{
+        } else if UIScreen.main.bounds.width == 375 {
             self.dateString.font = UIFont.systemFont(ofSize: 25.00)
         } else {
             self.dateString.font = UIFont.systemFont(ofSize: 30.00)
@@ -241,9 +241,9 @@ class ViewController: UIViewController {
     
     func getDay(_ date: Date) -> String? {
         let dateFormatter: DateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .short
-        let keyArr: [String] = dateFormatter.string(from: date).components(separatedBy: "/")
-        let keyStr: String = "\(keyArr[0] + keyArr[1])20\(keyArr[2])"
+        dateFormatter.dateFormat = "MMddyyyy"
+        
+        let keyStr: String = dateFormatter.string(from: date)
         if let req = self.request {
             let data = JSON.parse(req)
             if let dateString: String = data.value(forKey: keyStr) as? String {
