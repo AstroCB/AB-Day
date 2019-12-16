@@ -47,13 +47,13 @@ def update_dates(day_str, day_type):
     and all of the other clients will receive the new info on the next pull).
     """
     git_direc = "/home/cameron/astrocb.github.io/"
-    path = git_direc + "projects/ab-day/dates.json"
+    path = git_direc + "projects/ab-day/newdates.json"
     repo = git.Repo(git_direc)
     repo.git.pull() # Update directory from remote to pull latest date info
     with open(path, "r+") as dates_file:
         # Search & replace with the new "Snow" day
-        match_str = "\"" + day_str + "\":\"" + day_type + "\""
-        repl_str = "\"" + day_str + "\":\"Snow\""
+        match_str = "\"" + day_str + "\": \"" + day_type + "\""
+        repl_str = "\"" + day_str + "\": \"Snow\""
         new_data = re.sub(match_str, repl_str, dates_file.read())
         # Wipe old file
         dates_file.truncate()
@@ -63,7 +63,7 @@ def update_dates(day_str, day_type):
     # Commit changes as myself and push to remote to update globally
     repo.git.add([path])
     me = git.Actor("Cameron Bernhardt", "cambernhardt@me.com")
-    repo.git.commit(m="Update dates.json", author=me)
+    repo.git.commit(m="Update dates", author=me)
     repo.git.push()
 
 def send_push(body, title):
@@ -111,7 +111,7 @@ def main():
     Otherwise, a normal notification and tweet will be sent with the
     current type of day (A/B).
     """
-    DATE_API = "https://cameronbernhardt.com/projects/ab-day/dates.json"
+    DATE_API = "https://cameronbernhardt.com/projects/ab-day/newdates.json"
     BCPS_STATUS_PAGE = "http://www.bcps.org/status/"
 
     # Load the remote dates file from the site
@@ -123,12 +123,6 @@ def main():
 
     # Figure out what today is and format it to check
     today = str(date.today()).split("-")
-
-    # Deal with weird formatting of dates API (padded dates)
-    if today[2][0] == "0":
-        today[2] = today[2][1]
-    if today[1][0] == "0":
-        today[1] = today[1][1]
 
     day_str = today[1] + today[2] + today[0]
 
