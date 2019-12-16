@@ -59,7 +59,6 @@ class InterfaceController: WKInterfaceController {
         let json: JSON = JSON(url: "https://cameronbernhardt.com/projects/ab-day/newdates.json")
         data = json.load()
         if let abDay: String = getDay(forDate: Date()) {
-            print(abDay)
             if abDay != "failed" {
                 self.setLabelText(abDay, withSize: 90)
             }
@@ -115,7 +114,7 @@ class InterfaceController: WKInterfaceController {
     
     func setLabelText(_ text: String, withSize size: CGFloat) {
         let font: UIFont = UIFont.systemFont(ofSize: size)
-        let attrString: NSAttributedString = NSAttributedString(string: text, attributes: [NSAttributedStringKey.font: font])
+        let attrString: NSAttributedString = NSAttributedString(string: text, attributes: [NSAttributedString.Key.font: font])
         self.day.setAttributedText(attrString)
     }
     

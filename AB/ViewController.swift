@@ -43,30 +43,62 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
         self.setNeedsStatusBarAppearanceUpdate()
         
         self.initial = true
         self.request = getData()
         self.connected = true
         
-        self.calendar.backgroundColor = UIColor(white: 1, alpha: 0.5)
-        self.calendar.timeZone = TimeZone(abbreviation: "EDT")
-        
+        self.initCal()
         self.load(Date())
         
-        self.calendar.isHidden = true
-        self.ab.isHidden = false
-        self.todayButton.isHidden = true
-        self.loadButton.isHidden = true
+        self.initDanceView()
+        self.initHidden()
         
         self.configCircle()
         self.configButtons()
         
+        self.initFontSize()
+    }
+    
+    func initCal() {
+        if #available(iOS 11.0, *) {
+            // Set dark mode colors if needed
+            self.calendar.backgroundColor = UIColor(named: "calBackgroundColor")
+            self.calendar.setValue(UIColor(named: "calTextColor"), forKeyPath: "textColor")
+        }
+        self.calendar.setValue(0.5, forKeyPath: "alpha")
+        self.calendar.timeZone = TimeZone(abbreviation: "EDT")
+    }
+    
+    func initDanceView() {
+        self.danceView = UIImageView(frame: UIScreen.main.bounds)
+        self.danceView.image = UIImage(named: "Dance")
+        self.danceView.contentMode = .scaleAspectFill
+        self.danceView.translatesAutoresizingMaskIntoConstraints = false
+        self.danceView.isHidden = true
+        self.view.addSubview(self.danceView)
+        
+        let leadingConstraint = NSLayoutConstraint(item: self.danceView!, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1.0, constant: 0.0)
+        let trailingConstraint = NSLayoutConstraint(item: self.danceView!, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1.0, constant: 0.0)
+        let topConstraint = NSLayoutConstraint(item: self.danceView!, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: 0.0)
+        let bottomConstraint = NSLayoutConstraint(item: self.danceView!, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1.0, constant: 0.0)
+
+        NSLayoutConstraint.activate([leadingConstraint, trailingConstraint, topConstraint, bottomConstraint])
+    }
+    
+    func initHidden() {
+        self.calendar.isHidden = true
+        self.ab.isHidden = false
+        self.todayButton.isHidden = true
+        self.loadButton.isHidden = true
+    }
+    
+    func initFontSize() {
         // Set font sizes to fit screens properly
         if UIScreen.main.bounds.width < 375 {
             self.dateString.font = UIFont.systemFont(ofSize: 20.00)
-        } else if UIScreen.main.bounds.width == 375{
+        } else if UIScreen.main.bounds.width == 375 {
             self.dateString.font = UIFont.systemFont(ofSize: 25.00)
         } else {
             self.dateString.font = UIFont.systemFont(ofSize: 30.00)
@@ -91,12 +123,11 @@ class ViewController: UIViewController {
     @IBOutlet var circleView: UIView!
     @IBOutlet var changeDate: UIButton!
     @IBOutlet var dateTopConstraint: NSLayoutConstraint!
-    @IBOutlet var danceView: UIImageView!
     
     var initial: Bool = true
     var request: Data?
     var connected: Bool = true
-    var topConstant: CGFloat = 34
+    var danceView: UIImageView!
     var clickCounter: Int = 0
     
     @IBAction func setToday() {
@@ -210,9 +241,9 @@ class ViewController: UIViewController {
     
     func getDay(_ date: Date) -> String? {
         let dateFormatter: DateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .short
-        let keyArr: [String] = dateFormatter.string(from: date).components(separatedBy: "/")
-        let keyStr: String = "\(keyArr[0] + keyArr[1])20\(keyArr[2])"
+        dateFormatter.dateFormat = "MMddyyyy"
+        
+        let keyStr: String = dateFormatter.string(from: date)
         if let req = self.request {
             let data = JSON.parse(req)
             if let dateString: String = data.value(forKey: keyStr) as? String {
