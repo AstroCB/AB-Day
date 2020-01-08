@@ -154,12 +154,12 @@ def main():
             status = line
 
     if status != None and status != "":
-        match = re.search(r'All schools opening (\S*) hours late\.', status)
+        match = re.search(r'All schools(?: and offices)? opening (\S*) hours late\.', status)
         if match != None:
             if match.group(1):
                 push_string += " Schools will be opening " + match.group(1) + " hours late." # n hour Delay
                 title_string = "Schools Delayed"
-        match = re.search(r'All schools opening one hour late\.', status)
+        match = re.search(r'All schools(?: and offices)? opening one hour late\.', status)
         if match != None:
             push_string += " Schools will be opening one hour late." # One hour delay
             title_string = "Schools Delayed"
@@ -168,7 +168,6 @@ def main():
             push_string = "All schools are closed today."
             title_string = "Schools Closed"
             update_dates(day_str, day_type) # Update dates.json with the news
-
     send_tweet(push_string)
     send_push(push_string, title_string)
 
